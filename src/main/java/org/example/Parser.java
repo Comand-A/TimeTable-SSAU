@@ -57,8 +57,8 @@ public class Parser {
         ArrayList<String> Monday = getMonday();
         ArrayList<String> Dates = getDate();
         ArrayList<String> AnotherDays = getAnotherDays();
-        ArrayList<String> TimeTable = new ArrayList<String>();
-        ArrayList<String> neformal = new ArrayList<String>();
+        ArrayList<String> TimeTable = new ArrayList<>();
+        ArrayList<String> helper = new ArrayList<>();
         Monday.add(0,Dates.get(0));
         Dates.remove(0);
         for (int i=0;i<5;i++){
@@ -67,10 +67,10 @@ public class Parser {
         TimeTable.add(Monday.toString());
         for (int j=0;j<5;j++){
             for (int i=j;i<AnotherDays.size();i+=5){
-                neformal.add(AnotherDays.get(i));
+                helper.add(AnotherDays.get(i));
             }
-            TimeTable.add(neformal.toString());
-            neformal.clear();
+            TimeTable.add(helper.toString());
+            helper.clear();
         }
         return TimeTable;
     }

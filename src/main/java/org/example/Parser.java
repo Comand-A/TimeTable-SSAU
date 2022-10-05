@@ -40,9 +40,9 @@ public class Parser {
         Week = new ArrayList<>();
         for (Element Monday : Mondays) {
             if (!Monday.select("div[class=schedule__item schedule__item_show]").text().equals("")){
-                Week.add(Monday.select("div[class=schedule__item schedule__item_show]").text());
+                Week.add(Monday.select("div[class=schedule__item schedule__item_show]").text()+'\n');
             }else {
-                Week.add("Нет пары");
+                Week.add("Нет пары\n");
             }
         }
         return Week;
@@ -51,7 +51,7 @@ public class Parser {
         Elements dates = table.select("div[class=caption-text schedule__head-date]");
         Dates = new ArrayList<>();
         for (Element date : dates){
-            Dates.add(date.select("div[class=caption-text schedule__head-date]").text());
+            Dates.add(date.select("div[class=caption-text schedule__head-date]").text()+'\n');
         }
         return Dates;
     }
@@ -60,9 +60,9 @@ public class Parser {
         AnotherDays = new ArrayList<>();
         for (Element Day : allDay) {
             if (!Day.select("div[class=schedule__item]").text().equals("")){
-            AnotherDays.add(Day.select("div[class=schedule__item]").text());
+            AnotherDays.add(Day.select("div[class=schedule__item]").text()+"\n");
             }else {
-                AnotherDays.add("Нет пары");
+                AnotherDays.add("Нет пары\n");
             }
         }
         return AnotherDays;
@@ -91,7 +91,7 @@ public class Parser {
         SchedulePlace = getSchedulePlace();
         TimeTable = getTimeTable();
         for (String s : TimeTable) {
-            System.out.println(s);
+            System.out.println(s+"\n");
         }
         System.out.println(SchedulePlace);
         }

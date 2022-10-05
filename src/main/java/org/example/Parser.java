@@ -7,6 +7,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.SplittableRandom;
 
 public class Parser {
     public static Document Page;
@@ -26,73 +28,56 @@ public class Parser {
         Page = Jsoup.parse(new URL(url), 5000);
         return Page;
     }
-    public static String[] getMonday() throws IOException {
+    public static ArrayList<String> getMonday() throws IOException {
         Elements Mondays = table.select("div[class=schedule__item schedule__item_show]");
-        int n = 0;
-        String[] Week = new String[5];
+        ArrayList<String> Week = new ArrayList<>();
         for (Element Monday : Mondays) {
-            Week[n] = Monday.select("div[class=schedule__item schedule__item_show]").text();
-            n += 1;
+            Week.add(Monday.select("div[class=schedule__item schedule__item_show]").text());
         }
         return Week;
     }
-    private static String[] getDate() throws IOException{
+    private static ArrayList<String> getDate() throws IOException{
         Elements dates = table.select("div[class=caption-text schedule__head-date]");
-        String[] Dates = new String[6];
-        int i = 0;
+        ArrayList<String> Dates = new ArrayList<>();
         for (Element date : dates){
-            Dates[i] = date.select("div[class=caption-text schedule__head-date]").text();
-            i+=1;
+            Dates.add(date.select("div[class=caption-text schedule__head-date]").text());
         }
         return Dates;
     }
-    public static String[] getAnotherDays() throws IOException {
+    public static ArrayList<String> getAnotherDays() throws IOException {
         Elements alls = table.select("div[class=schedule__item]");
-        int k = 0;
+        ArrayList<String> AnotherDays = new ArrayList<>();
         for (Element all : alls) {
-            k += 1;
-        }
-        String[] AnotherDays = new String[k];
-        k = 0;
-        for (Element all : alls) {
-            AnotherDays[k] = all.select("div[class=schedule__item]").text();
-            k += 1;
+            AnotherDays.add(all.select("div[class=schedule__item]").text());
         }
         return AnotherDays;
     }
 
-    public static String[][] getTimeTable() throws IOException {
-        String[] Monday = getMonday();
-        String[][] TimeTable = new String[6][6];
-        for (int i = 0; i < 5; i++) {
-            TimeTable[i+1][0] = Monday[i];
+    public static ArrayList<String> getTimeTable() throws IOException {
+        ArrayList<String> Monday = getMonday();
+        ArrayList<String> Dates = getDate();
+        ArrayList<String> AnotherDays = getAnotherDays();
+        ArrayList<String> TimeTable = new ArrayList<String>();
+        ArrayList<String> neformal = new ArrayList<String>();
+        Monday.add(0,Dates.get(0));
+        Dates.remove(0);
+        for (int i=0;i<5;i++){
+            AnotherDays.add(i,Dates.get(i));
         }
-        String[] Dates = getDate();
-        for (int i = 0; i < 6; i++) {
-            TimeTable[0][i] = Dates[i];
-        }
-        int a=0;
-        String[] AnotherDays = getAnotherDays();
-        for (int i = 1; i < 6; i++){
-            for(int j = 1; j < 6; j++){
-                TimeTable[i][j]=AnotherDays[a];
-                a+=1;
+        TimeTable.add(Monday.toString());
+        for (int j=0;j<5;j++){
+            for (int i=j;i<AnotherDays.size();i+=5){
+                neformal.add(AnotherDays.get(i));
             }
+            TimeTable.add(neformal.toString());
+            neformal.clear();
         }
         return TimeTable;
     }
     public static void main(String[] args) throws IOException {
-        String[][] TimeTable = getTimeTable();
-        for (int i = 0; i < 6; i++){
-            for(int j = 0; j < 6; j++){
-                if (TimeTable[j][i].equals("")){
-                    System.out.println("-");
-                }
-                else{
-                    System.out.println(TimeTable[j][i]);
-                }
-            }
-            System.out.println("\n");
+        ArrayList<String> TimeTable = getTimeTable();
+        for (int i = 0; i < TimeTable.size(); i++){
+            System.out.println(TimeTable.get(i));
+        }
         }
     }
-}

@@ -7,92 +7,94 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Parser {
-    public static Document Page;
-    public static Element table;
-    public static ArrayList<String> Week,SchedulePlace,Dates,AnotherDays,Monday,TimeTable,helper;
-    static {
+    public Document page;
+    public Element table;
+    public ArrayList<String> week, schedulePlace, dates, anotherDays, monday;
+    public List<Day> timeTable;
+
+
+    public Parser() {
         try {
-            Page = getPage();
-            table = Page.select("div[class=schedule__items]").first();
+            page = getPage();
+            table = page.select("div[class=schedule__items]").first();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static Document getPage() throws IOException {
-        String url = "https://ssau.ru/rasp?groupId=755922237&selectedWeek=6&selectedWeekday=1";
-        Page = Jsoup.parse(new URL(url), 5000);
-        return Page;
-    }
-    private static ArrayList<String> getSchedulePlace(){
-        Elements SchedulePlaces = table.select("div[class=caption-text schedule__place]");
-        SchedulePlace = new ArrayList<>();
-        for (Element Place : SchedulePlaces){
-            SchedulePlace.add(Place.select("div[class=caption-text schedule__place]").text());
-        }
-        return SchedulePlace;
-    }
-    public static ArrayList<String> getMonday(){
-        Elements Mondays = table.select("div[class=schedule__item schedule__item_show]");
-        Week = new ArrayList<>();
-        for (Element Monday : Mondays) {
-            if (!Monday.select("div[class=schedule__item schedule__item_show]").text().equals("")){
-                Week.add(Monday.select("div[class=schedule__item schedule__item_show]").text()+'\n');
-            }else {
-                Week.add("Нет пары\n");
-            }
-        }
-        return Week;
-    }
-    private static ArrayList<String> getDate(){
-        Elements dates = table.select("div[class=caption-text schedule__head-date]");
-        Dates = new ArrayList<>();
-        for (Element date : dates){
-            Dates.add(date.select("div[class=caption-text schedule__head-date]").text()+'\n');
-        }
-        return Dates;
-    }
-    public static ArrayList<String> getAnotherDays(){
-        Elements allDay = table.select("div[class=schedule__item]");
-        AnotherDays = new ArrayList<>();
-        for (Element Day : allDay) {
-            if (!Day.select("div[class=schedule__item]").text().equals("")){
-            AnotherDays.add(Day.select("div[class=schedule__item]").text()+"\n");
-            }else {
-                AnotherDays.add("Нет пары\n");
-            }
-        }
-        return AnotherDays;
+    public Document getPage() throws IOException {
+        String url = "https://ssau.ru/rasp?groupId=755922237&selectedWeek=2&selectedWeekday=1";
+        page = Jsoup.parse(new URL(url), 5000);
+        return page;
     }
 
-    public static ArrayList<String> getTimeTable(){
-        Monday = getMonday();
-        Dates = getDate();
-        AnotherDays = getAnotherDays();
-        TimeTable = new ArrayList<>();
-        helper = new ArrayList<>();
-        Monday.add(0,Dates.get(0));
-        Dates.remove(0);
-        AnotherDays.addAll(0,Dates);
-        TimeTable.add(Monday.toString());
-        for (int j=0;j<5;j++){
-            for (int i=j;i<AnotherDays.size();i+=5){
-                helper.add(AnotherDays.get(i));
+    private ArrayList<String> getSchedulePlace() {
+        String cssQuery = "div[class=caption-text schedule__place]";
+        Elements SchedulePlaces = table.select(cssQuery);
+        schedulePlace = new ArrayList<>();
+        for (Element Place : SchedulePlaces) {
+            schedulePlace.add(Place.select(cssQuery).text());
+        }
+        return schedulePlace;
+    }
+
+    public ArrayList<String> getMonday() {
+        String cssQuery = "div[class=schedule__item schedule__item_show]";
+        Elements Mondays = table.select(cssQuery);
+        week = new ArrayList<>();
+        for (Element Monday : Mondays) {
+            if (!Monday.select(cssQuery).text().equals("")) {
+                week.add(Monday.select(cssQuery).text() + '\n');
+            } else {
+                week.add("Нет пары\n");
             }
-            TimeTable.add(helper.toString());
-            helper.clear();
         }
-        return TimeTable;
+        return week;
     }
-    public static void main(String[] args){
-        SchedulePlace = getSchedulePlace();
-        TimeTable = getTimeTable();
-        for (String s : TimeTable) {
-            System.out.println(s+"\n");
+
+    private ArrayList<String> getDate() {
+        String cssQuery = "div[class=caption-text schedule__head-date]";
+        Elements dates = table.select(cssQuery);
+        this.dates = new ArrayList<>();
+        for (Element date : dates) {
+            this.dates.add(date.select(cssQuery).text() + '\n');
         }
-        System.out.println(SchedulePlace);
-        }
+        return this.dates;
     }
+    public ArrayList<String> getAnotherDays() {
+        String cssQuery = "div[class=schedule__item]";
+        Elements allDay = table.select(cssQuery);
+        anotherDays = new ArrayList<>();
+        for (Element day : allDay) {
+            if (!day.select(cssQuery).text().equals("")) anotherDays.add(day.select(cssQuery).text() + "\n");
+            else anotherDays.add("Нет пары\n");
+        }
+        return anotherDays;
+    }
+
+    public List<Day> getTimeTable() {
+        monday = this.getMonday();
+        dates = this.getDate();
+        anotherDays = this.getAnotherDays();
+        timeTable = new ArrayList<>(Collections.singletonList(new Day(dates.get(0), monday.get(0), monday.get(1), monday.get(2), monday.get(3), monday.get(4))));
+        dates.remove(0);
+        anotherDays.addAll(0, dates);
+        for (int i = 0; i < 5; i++) {
+            timeTable.add((new Day(anotherDays.get(i), anotherDays.get(i + 5), anotherDays.get(i + 10), anotherDays.get(i + 15), anotherDays.get(i + 20), anotherDays.get(i + 25))));
+        }
+        return timeTable;
+    }
+
+    public void Print() {
+        Parser parser = new Parser();
+        ArrayList<String> schedulePlace = parser.getSchedulePlace();
+        timeTable = parser.getTimeTable();
+        for (Day s : timeTable) {
+            System.out.println(s);
+        }
+        System.out.println(schedulePlace);
+    }
+}

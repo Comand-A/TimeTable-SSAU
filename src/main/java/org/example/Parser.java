@@ -8,7 +8,6 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.SplittableRandom;
 
 public class Parser {
     public static Document Page;
@@ -23,20 +22,31 @@ public class Parser {
     }
 
     public static Document getPage() throws IOException {
-        String numberWeek = "2";
         String url = "https://ssau.ru/rasp?groupId=755922237&selectedWeek=6&selectedWeekday=1";
         Page = Jsoup.parse(new URL(url), 5000);
         return Page;
     }
-    public static ArrayList<String> getMonday() throws IOException {
+    private static ArrayList<String> getSchedulePlace(){
+        Elements SchedulePlaces = table.select("div[class=caption-text scheduleplace]");
+        ArrayList<String> SchedulePlace = new ArrayList<>();
+        for (Element Place : SchedulePlaces){
+            SchedulePlace.add(Place.select("div[class=caption-text scheduleplace]").text());
+        }
+        return SchedulePlace;
+    }
+    public static ArrayList<String> getMonday(){
         Elements Mondays = table.select("div[class=schedule__item schedule__item_show]");
         ArrayList<String> Week = new ArrayList<>();
         for (Element Monday : Mondays) {
-            Week.add(Monday.select("div[class=schedule__item schedule__item_show]").text());
+            if (!Monday.select("div[class=schedule__item schedule__item_show]").text().equals("")){
+                Week.add(Monday.select("div[class=schedule__item schedule__item_show]").text());
+            }else {
+                Week.add("Нет пары");
+            }
         }
         return Week;
     }
-    private static ArrayList<String> getDate() throws IOException{
+    private static ArrayList<String> getDate(){
         Elements dates = table.select("div[class=caption-text schedule__head-date]");
         ArrayList<String> Dates = new ArrayList<>();
         for (Element date : dates){
@@ -44,16 +54,20 @@ public class Parser {
         }
         return Dates;
     }
-    public static ArrayList<String> getAnotherDays() throws IOException {
+    public static ArrayList<String> getAnotherDays(){
         Elements alls = table.select("div[class=schedule__item]");
         ArrayList<String> AnotherDays = new ArrayList<>();
         for (Element all : alls) {
+            if (!all.select("div[class=schedule__item]").text().equals("")){
             AnotherDays.add(all.select("div[class=schedule__item]").text());
+            }else {
+                AnotherDays.add("Нет пары");
+            }
         }
         return AnotherDays;
     }
 
-    public static ArrayList<String> getTimeTable() throws IOException {
+    public static ArrayList<String> getTimeTable(){
         ArrayList<String> Monday = getMonday();
         ArrayList<String> Dates = getDate();
         ArrayList<String> AnotherDays = getAnotherDays();
@@ -74,10 +88,12 @@ public class Parser {
         }
         return TimeTable;
     }
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
+        ArrayList<String> SchedulePlace = getSchedulePlace();
         ArrayList<String> TimeTable = getTimeTable();
-        for (int i = 0; i < TimeTable.size(); i++){
-            System.out.println(TimeTable.get(i));
+        for (String s : TimeTable) {
+            System.out.println(s);
         }
+        System.out.println(SchedulePlace);
         }
     }

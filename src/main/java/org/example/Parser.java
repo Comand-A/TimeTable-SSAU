@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Parser {
     public static Document Page;
     public static Element table;
+    public static ArrayList<String> Week,SchedulePlace,Dates,AnotherDays,Monday,TimeTable,helper;
     static {
         try {
             Page = getPage();
@@ -27,16 +28,16 @@ public class Parser {
         return Page;
     }
     private static ArrayList<String> getSchedulePlace(){
-        Elements SchedulePlaces = table.select("div[class=caption-text scheduleplace]");
-        ArrayList<String> SchedulePlace = new ArrayList<>();
+        Elements SchedulePlaces = table.select("div[class=caption-text schedule__place]");
+        SchedulePlace = new ArrayList<>();
         for (Element Place : SchedulePlaces){
-            SchedulePlace.add(Place.select("div[class=caption-text scheduleplace]").text());
+            SchedulePlace.add(Place.select("div[class=caption-text schedule__place]").text());
         }
         return SchedulePlace;
     }
     public static ArrayList<String> getMonday(){
         Elements Mondays = table.select("div[class=schedule__item schedule__item_show]");
-        ArrayList<String> Week = new ArrayList<>();
+        Week = new ArrayList<>();
         for (Element Monday : Mondays) {
             if (!Monday.select("div[class=schedule__item schedule__item_show]").text().equals("")){
                 Week.add(Monday.select("div[class=schedule__item schedule__item_show]").text());
@@ -48,18 +49,18 @@ public class Parser {
     }
     private static ArrayList<String> getDate(){
         Elements dates = table.select("div[class=caption-text schedule__head-date]");
-        ArrayList<String> Dates = new ArrayList<>();
+        Dates = new ArrayList<>();
         for (Element date : dates){
             Dates.add(date.select("div[class=caption-text schedule__head-date]").text());
         }
         return Dates;
     }
     public static ArrayList<String> getAnotherDays(){
-        Elements alls = table.select("div[class=schedule__item]");
-        ArrayList<String> AnotherDays = new ArrayList<>();
-        for (Element all : alls) {
-            if (!all.select("div[class=schedule__item]").text().equals("")){
-            AnotherDays.add(all.select("div[class=schedule__item]").text());
+        Elements allDay = table.select("div[class=schedule__item]");
+        AnotherDays = new ArrayList<>();
+        for (Element Day : allDay) {
+            if (!Day.select("div[class=schedule__item]").text().equals("")){
+            AnotherDays.add(Day.select("div[class=schedule__item]").text());
             }else {
                 AnotherDays.add("Нет пары");
             }
@@ -68,16 +69,14 @@ public class Parser {
     }
 
     public static ArrayList<String> getTimeTable(){
-        ArrayList<String> Monday = getMonday();
-        ArrayList<String> Dates = getDate();
-        ArrayList<String> AnotherDays = getAnotherDays();
-        ArrayList<String> TimeTable = new ArrayList<>();
-        ArrayList<String> helper = new ArrayList<>();
+        Monday = getMonday();
+        Dates = getDate();
+        AnotherDays = getAnotherDays();
+        TimeTable = new ArrayList<>();
+        helper = new ArrayList<>();
         Monday.add(0,Dates.get(0));
         Dates.remove(0);
-        for (int i=0;i<5;i++){
-            AnotherDays.add(i,Dates.get(i));
-        }
+        AnotherDays.addAll(0,Dates);
         TimeTable.add(Monday.toString());
         for (int j=0;j<5;j++){
             for (int i=j;i<AnotherDays.size();i+=5){
@@ -89,8 +88,8 @@ public class Parser {
         return TimeTable;
     }
     public static void main(String[] args){
-        ArrayList<String> SchedulePlace = getSchedulePlace();
-        ArrayList<String> TimeTable = getTimeTable();
+        SchedulePlace = getSchedulePlace();
+        TimeTable = getTimeTable();
         for (String s : TimeTable) {
             System.out.println(s);
         }

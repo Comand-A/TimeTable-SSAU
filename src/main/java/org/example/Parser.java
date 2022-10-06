@@ -44,7 +44,6 @@ public class Parser {
     public ArrayList<String> getMonday() {
         String cssQuery = "div[class=schedule__item schedule__item_show]";
         String[] cssQueryArray = {"div[class=body-text schedule__discipline lesson-color lesson-color-type-","1]","2]","3]","4]"};
-
         Elements Mondays = table.select(cssQuery);
         week = new ArrayList<>();
         int i=0;
@@ -52,13 +51,15 @@ public class Parser {
             if (!Monday.select(cssQuery).text().equals("")) {
                 for (int j=1;j<5;j++){
                     week.add(Monday.select(cssQueryArray[0]+cssQueryArray[j]).text());
-                    if (week.get(i).equals("")) {
-                        week.remove(i);
-                    }}
-            } else {
-                week.add("Нет пары\n");
+                    if (week.get(i).equals("")) {week.remove(i);}
+                }
             }
             i++;
+        }
+        for (int n=0;n<5;n++){
+            if (week.get(n).equals("")){
+                week.set(n,"Нет пары");
+            }
         }
         return week;
     }
@@ -75,11 +76,23 @@ public class Parser {
 
     public ArrayList<String> getAnotherDays() {
         String cssQuery = "div[class=schedule__item]";
+        String[] cssQueryArray = {"div[class=body-text schedule__discipline lesson-color lesson-color-type-","1]","2]","3]","4]"};
         Elements allDay = table.select(cssQuery);
         anotherDays = new ArrayList<>();
+        int i=0;
         for (Element day : allDay) {
-            if (!day.select(cssQuery).text().equals("")) anotherDays.add(day.select(cssQuery).text() + "\n");
-            else anotherDays.add("Нет пары\n");
+            if (!day.select(cssQuery).text().equals("")) {
+                for (int j=1;j<5;j++){
+                    anotherDays.add(day.select(cssQueryArray[0]+cssQueryArray[j]).text());
+                    if (anotherDays.get(i).equals("")) {anotherDays.remove(i);}
+                }
+            }
+            i++;
+        }
+        for (int n=0;n<anotherDays.size();n++){
+            if (anotherDays.get(n).equals("")){
+                anotherDays.set(n,"Нет пары");
+            }
         }
         return anotherDays;
     }

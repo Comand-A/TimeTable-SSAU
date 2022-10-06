@@ -43,14 +43,22 @@ public class Parser {
 
     public ArrayList<String> getMonday() {
         String cssQuery = "div[class=schedule__item schedule__item_show]";
+        String[] cssQueryArray = {"div[class=body-text schedule__discipline lesson-color lesson-color-type-","1]","2]","3]","4]"};
+
         Elements Mondays = table.select(cssQuery);
         week = new ArrayList<>();
+        int i=0;
         for (Element Monday : Mondays) {
             if (!Monday.select(cssQuery).text().equals("")) {
-                week.add(Monday.select(cssQuery).text() + '\n');
+                for (int j=1;j<5;j++){
+                    week.add(Monday.select(cssQueryArray[0]+cssQueryArray[j]).text());
+                    if (week.get(i).equals("")) {
+                        week.remove(i);
+                    }}
             } else {
                 week.add("Нет пары\n");
             }
+            i++;
         }
         return week;
     }
@@ -64,6 +72,7 @@ public class Parser {
         }
         return this.dates;
     }
+
     public ArrayList<String> getAnotherDays() {
         String cssQuery = "div[class=schedule__item]";
         Elements allDay = table.select(cssQuery);

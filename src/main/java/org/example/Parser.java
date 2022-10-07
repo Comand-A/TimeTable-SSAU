@@ -12,7 +12,7 @@ import java.util.*;
 public class Parser {
     public Document page;
     public Element table;
-    public ArrayList<String> week, schedulePlace, dates, anotherDays, monday, teachers;
+    public ArrayList<String> week, schedulePlace, dates, anotherDays, monday, teachers, groups;
     public List<Day> timeTable;
 
 
@@ -25,12 +25,14 @@ public class Parser {
         }
     }
 
-    public Document getPage() throws IOException {
+    private Document getPage() throws IOException {
         String url = "https://ssau.ru/rasp?groupId=755922237&selectedWeek=6&selectedWeekday=1";
         page = Jsoup.parse(new URL(url), 5000);
         return this.page;
     }
-
+//private ArrayList<String> getCycle(){
+//        return
+//}
     private ArrayList<String> getSchedulePlace() {
         String[] cssQueryArray = {"div[class=schedule__item schedule__item_show]", "div[class=caption-text schedule__place]", "div[class=schedule__item]"};
         schedulePlace = new ArrayList<>();
@@ -43,6 +45,22 @@ public class Parser {
             schedulePlace.add(place.select(cssQueryArray[1]).text());
         }
         return this.schedulePlace;
+    }
+
+    private ArrayList<String> getGroups() {
+        String[] cssQueryArray = {"div[class=schedule__item schedule__item_show]","span[class=caption-text]","div[class=schedule__item]"};
+        Elements groupMonday = table.select(cssQueryArray[0]);
+        Elements groupAnotherDays = table.select(cssQueryArray[2]);
+        groups = new ArrayList<>();
+        for (Element group : groupMonday) {
+            if (!group.select(cssQueryArray[1]).text().equals("")) groups.add(group.select(cssQueryArray[1]).text());
+            else groups.add("Вся группа");
+        }
+        for (Element group : groupAnotherDays) {
+            if (!group.select(cssQueryArray[1]).text().equals("")) groups.add(group.select(cssQueryArray[1]).text());
+            else groups.add("Вся группа");
+        }
+        return this.groups;
     }
 
     private ArrayList<String> getTeacher() {
@@ -59,7 +77,7 @@ public class Parser {
         return this.teachers;
     }
 
-    public ArrayList<String> getMonday() {
+    private ArrayList<String> getMonday() {
         String cssQuery = "div[class=schedule__item schedule__item_show]";
         String[] cssQueryArray = {"div[class=body-text schedule__discipline lesson-color lesson-color-type-", "1]", "2]", "3]", "4]"};
         Elements Mondays = table.select(cssQuery);
@@ -91,7 +109,7 @@ public class Parser {
         return this.dates;
     }
 
-    public ArrayList<String> getAnotherDays() {
+    private ArrayList<String> getAnotherDays() {
         String cssQuery = "div[class=schedule__item]";
         String[] cssQueryArray = {"div[class=body-text schedule__discipline lesson-color lesson-color-type-", "1]", "2]", "3]", "4]"};
         Elements allDay = table.select(cssQuery);
@@ -112,7 +130,7 @@ public class Parser {
         return this.anotherDays;
     }
 
-    public List<Day> getTimeTable() {
+    private List<Day> getTimeTable() {
         monday = this.getMonday();
         dates = this.getDate();
         anotherDays = this.getAnotherDays();
@@ -128,7 +146,7 @@ public class Parser {
         anotherDays.addAll(0, dates);
         for (int i = 0; i < 5; i++) {
             timeTable.add((new Day(anotherDays.get(i),
-                    anotherDays.get(i + 5), schedulePlace.get(i+5), teachers.get(i+5),
+                    anotherDays.get(i + 5), schedulePlace.get(i + 5), teachers.get(i + 5),
                     anotherDays.get(i + 10), schedulePlace.get(i + 10), teachers.get(i + 10),
                     anotherDays.get(i + 15), schedulePlace.get(i + 15), teachers.get(i + 15),
                     anotherDays.get(i + 20), schedulePlace.get(i + 20), teachers.get(i + 20),
@@ -142,6 +160,7 @@ public class Parser {
 //        schedulePlace = getSchedulePlace();
 //        teachers=getTeacher();
         timeTable = parser.getTimeTable();
+        groups=getGroups();
         for (Day s : timeTable) {
             System.out.println(s);
         }

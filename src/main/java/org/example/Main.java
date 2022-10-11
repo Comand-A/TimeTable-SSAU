@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.Parser.Parser;
+
 import java.io.IOException;
 
 public class Main {

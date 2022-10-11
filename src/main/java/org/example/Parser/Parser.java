@@ -15,19 +15,28 @@ public class Parser {
     private ArrayList<String> schedulePlace, dates, anotherDays, monday, teachers, groups, volatileDataCollector, cssQueryList;
     private List<Day> timeTable;
 
+    private String numberOfWeek;
+
 
     public Parser() {
         try {
+            RealDate realDate = new RealDate();
+            numberOfWeek = Long.toString(realDate.getNumberOfWeek());
             page = getPage();
             table = page.select("div[class=schedule__items]").first();
-            //new RealDate(page);
+            getDate();
+            getMonday();
+            getAnotherDays();
+            getSchedulePlace();
+            getTeacher();
+            getGroups();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private Document getPage() throws IOException {
-        String url = "https://ssau.ru/rasp?groupId=755922237&selectedWeek=6&selectedWeekday=1";
+        String url = "https://ssau.ru/rasp?groupId=755922237&selectedWeek=" + numberOfWeek;
         page = Jsoup.parse(new URL(url), 5000);
         return this.page;
     }
@@ -55,7 +64,7 @@ public class Parser {
         cssQueryList = new ArrayList<>(Arrays.asList("div[class=schedule__item schedule__item_show]", "div[class=schedule__groups]", "div[class=schedule__item]"));
         groups = getCycle(cssQueryList);
         for (int i = 0; i < 30; i++) {
-            if (groups.get(i).equals("") ) groups.set(i, "Вся группа");
+            if (groups.get(i).equals("")) groups.set(i, "Вся группа");
         }
     }
 
@@ -93,15 +102,14 @@ public class Parser {
     }
 
     private void getAnotherDays() {
-        String cssQuery = "div[class=schedule__item]";
-        String[] cssQueryArray = {"div[class=body-text schedule__discipline lesson-color lesson-color-type-", "1]", "2]", "3]", "4]"};
-        Elements allDay = table.select(cssQuery);
+        String[] cssQueryArray = {"div[class=schedule__item]","div[class=body-text schedule__discipline lesson-color lesson-color-type-", "1]", "2]", "3]", "4]"};
+        Elements allDay = table.select(cssQueryArray[0]);
         anotherDays = new ArrayList<>();
         for (Element day : allDay) {
-            if (!day.select(cssQuery).text().equals("")) {
-                for (int j = 1; j < 5; j++) {
-                    if (!day.select(cssQueryArray[0] + cssQueryArray[j]).text().equals("")) {
-                        anotherDays.add(day.select(cssQueryArray[0] + cssQueryArray[j]).text());
+            if (!day.select(cssQueryArray[0]).text().equals("")) {
+                for (int j = 2; j < 5; j++) {
+                    if (!day.select(cssQueryArray[1] + cssQueryArray[j]).text().equals("")) {
+                        anotherDays.add(day.select(cssQueryArray[1] + cssQueryArray[j]).text());
                     }
                 }
             } else {
@@ -111,12 +119,6 @@ public class Parser {
     }
 
     private List<Day> getTimeTable() {
-        getDate();
-        getMonday();
-        getAnotherDays();
-        getSchedulePlace();
-        getTeacher();
-        getGroups();
         timeTable = new ArrayList<>(Collections.singletonList(new Day(dates.get(0),
                 monday.get(0), schedulePlace.get(0), teachers.get(0), groups.get(0),
                 monday.get(1), schedulePlace.get(1), teachers.get(1), groups.get(1),
@@ -136,12 +138,11 @@ public class Parser {
         return this.timeTable;
     }
 
-    public void Print() {
+    public void Print(){
         Parser parser = new Parser();
         timeTable = parser.getTimeTable();
         for (Day s : timeTable) {
             System.out.println(s);
         }
-        //System.out.println(schedulePlace+"\n"+teachers);
     }
 }

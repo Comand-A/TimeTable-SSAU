@@ -6,8 +6,9 @@ import org.example.Parser.RealDate;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Parser getData = new Parser();
-        getData.Print();
+    public static void main(String[] args){
+
+//        Parser getData = new Parser();
+//        getData.Print();
     }
 }

@@ -3,8 +3,8 @@ package org.example.Telegram.Model;
 import com.vdurmont.emoji.EmojiParser;
 
 public enum NameButton {
-    SHUDELE(Emoji.ROCKET.get() + "К расписанию" + Emoji.ROCKET.get()),
-    AUTHORS(Emoji.AUTHOR.get() + "Авторы" + Emoji.AUTHOR.get()),
+    SHUDELE("К расписанию"),
+    AUTHORS("Авторы"),
     BACK("Назад");
     private final String value;
 

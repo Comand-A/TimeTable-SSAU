@@ -1,5 +1,6 @@
 package org.example.Telegram.KeyBoard;
 
+import org.example.Telegram.Model.Emoji;
 import org.example.Telegram.Model.NameButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -22,8 +23,8 @@ public class ReplyKeyboardUser {
 
         rowOne = new KeyboardRow();
 
-        rowOne.add(NameButton.SHUDELE.get());
-        rowOne.add(NameButton.AUTHORS.get());
+        rowOne.add(Emoji.ROCKET.get() + NameButton.SHUDELE.get() + Emoji.ROCKET.get());
+        rowOne.add(Emoji.AUTHOR.get() + NameButton.AUTHORS.get() + Emoji.AUTHOR.get());
         keyboardRows.add(rowOne);
 
         keyboardMarkup.setKeyboard(keyboardRows);

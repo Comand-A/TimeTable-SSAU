@@ -14,7 +14,7 @@ public class ReplyKeyboardUser {
     private ReplyKeyboardMarkup keyboardMarkup;
     private List<KeyboardRow> keyboardRows;
 
-    private KeyboardRow rowOne;
+    private KeyboardRow rowOne, rowTwo;
 
     public ReplyKeyboard keyboardStart() {
         keyboardMarkup = new ReplyKeyboardMarkup();
@@ -32,7 +32,7 @@ public class ReplyKeyboardUser {
         return keyboardMarkup;
     }
 
-    public ReplyKeyboardMarkup getAuthorsProject() {
+    public ReplyKeyboardMarkup keyboardAuthorsProject() {
         keyboardMarkup = new ReplyKeyboardMarkup();
         keyboardMarkup.setResizeKeyboard(true);
         keyboardRows = new ArrayList<>();
@@ -41,6 +41,29 @@ public class ReplyKeyboardUser {
 
         rowOne.add(NameButton.BACK.get());
         keyboardRows.add(rowOne);
+
+        keyboardMarkup.setKeyboard(keyboardRows);
+
+        return keyboardMarkup;
+    }
+
+    public ReplyKeyboard keyboardChooseWeek() {
+        keyboardMarkup = new ReplyKeyboardMarkup();
+        keyboardMarkup.setResizeKeyboard(true);
+        keyboardRows = new ArrayList<>();
+
+        rowOne = new KeyboardRow();
+
+        rowOne.add(NameButton.PAST_WEEK.get());
+        rowOne.add(NameButton.THIS_WEEK.get());
+        rowOne.add(NameButton.NEXT_WEEK.get());
+        keyboardRows.add(rowOne);
+
+        rowTwo =new KeyboardRow();
+        rowTwo.add(NameButton.USER_WEEK.get());
+        rowTwo.add(NameButton.BACK.get());
+
+        keyboardRows.add(rowTwo);
 
         keyboardMarkup.setKeyboard(keyboardRows);
 

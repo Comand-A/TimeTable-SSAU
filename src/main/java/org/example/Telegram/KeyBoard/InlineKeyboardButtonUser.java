@@ -1,7 +1,7 @@
 package org.example.Telegram.KeyBoard;
 
 import org.example.Telegram.Model.Emoji;
-import org.example.Telegram.Model.ListDirection;
+import org.example.Telegram.Model.Direction;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -42,17 +42,16 @@ public class InlineKeyboardButtonUser {
 
         initializationInlineKeyboard();
 
-        InlineKeyboardButton buttonFiit = new InlineKeyboardButton();
+        InlineKeyboardButton button = new InlineKeyboardButton();
 
-        buttonFiit.setText(Emoji.CROWN.get() + ListDirection.FIIT.get() + Emoji.CROWN.get());
-        buttonFiit.setCallbackData(ListDirection.FIIT.get());
+        button.setText(Emoji.CROWN.get() + Direction.FIIT.get() + Emoji.CROWN.get());
+        button.setCallbackData(Direction.FIIT.get());
+        rowInLine.add(button);
 
-        InlineKeyboardButton buttonPmf = new InlineKeyboardButton();
+        button.setText(Direction.PMF.get());
+        button.setCallbackData(Direction.PMF.get());
 
-        buttonPmf.setText(ListDirection.PMF.get());
-        buttonPmf.setCallbackData(ListDirection.PMF.get());
-        rowInLine.add(buttonFiit);
-        rowInLine.add(buttonPmf);
+        rowInLine.add(button);
 
         rowsInLine.add(rowInLine);
 

@@ -39,8 +39,8 @@ public class Day {
 
     @Override
     public String toString() {
-        return String.format("Дата:%s\nПара1:%s\nМесто:%s\nУчитель:%s\nГруппа:%s\n\nПара2:%s\nМесто:%s\nУчитель:%s\nГруппа:%s\n\nПара3:%s" +
-                        "\nМесто:%s\nУчитель:%s\nГруппа:%s\n\nПара4:%s\nМесто:%s\nУчитель:%s\nГруппа:%s\n\nПара5:%s\nМесто:%s\nУчитель:%s\nГруппа:%s\n\n",
+        return String.format("Дата:%s\n08:00 - 09:35: %s\nМесто: %s\nУчитель: %s\nГруппа: %s\n\n09:45 - 11:20: %s\nМесто: %s\nУчитель: %s\nГруппа: %s\n\n11:30 - 13:05: %s" +
+                        "\nМесто: %s\nУчитель: %s\nГруппа: %s\n\n13:30 - 15:05: %s\nМесто: %s\nУчитель: %s\nГруппа: %s\n\n15:15 - 16:50: %s\nМесто: %s\nУчитель: %s\nГруппа: %s\n\n",
                 this.data, this.paraFirst, this.placeFirst, this.teacherFirst,this.groupFirst,
                 this.paraSecond, this.placeSecond, this.teacherSecond,this.groupSecond,
                 this.paraThird, this.placeThird, this.teacherThird,this.groupThird,

@@ -6,7 +6,8 @@ public enum Emoji {
     ROCKET(":rocket:"),
     CROWN(":crown:"),
     AUTHOR(":man_technologist:"),
-    WELCOME(":wave:");
+    WELCOME(":wave:"),
+    CROSS(":x:");
 
     private final String value;
 

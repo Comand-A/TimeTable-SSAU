@@ -21,7 +21,7 @@ public class RealDate {
         table = page.select("ul[class=text-center]").first();
         realDate = table.select("span").first().text();
     }
-    public long getNumberOfWeek() throws IOException {
+    public String getNumberOfWeek(long number) throws IOException {
         getPage();
         long millisecondsInOneWeek = 604800000;
         Date begin = new Date(1661630400001L);
@@ -32,6 +32,6 @@ public class RealDate {
             throw new RuntimeException(e);
         }
         long numberOfWeek = (((realDateInDate.getTime() - begin.getTime()) / millisecondsInOneWeek) + 1);
-        return numberOfWeek;
+        return String.valueOf(numberOfWeek+number);
     }
 }

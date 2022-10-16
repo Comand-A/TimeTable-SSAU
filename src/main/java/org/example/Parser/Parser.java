@@ -76,11 +76,16 @@ public class Parser {
     }
 
     private void getDate() {
+        ArrayList<String> nameDayWeek = new ArrayList<>(Arrays.asList(Emoji.UNDERAGE.get() + "Понедельник" + Emoji.UNDERAGE.get(),
+                Emoji.RULER.get() + "Вторник" + Emoji.RULER.get(), Emoji.MEMO.get() + "Среда" + Emoji.MEMO.get(),
+                Emoji.BALLOON.get() + "Четверг" + Emoji.BALLOON.get(), Emoji.TADA.get() + "Пятница" + Emoji.TADA.get(), Emoji.PAINTBRUSH.get() + "Суббота" + Emoji.PAINTBRUSH.get()));
         String cssQuery = "div[class=caption-text schedule__head-date]";
         Elements datesVolatile = table.select(cssQuery);
         dates = new ArrayList<>();
+        int i = 0;
         for (Element date : datesVolatile) {
-            dates.add(date.select(cssQuery).text() + '\n');
+            dates.add(nameDayWeek.get(i) + " (" + date.select(cssQuery).text() + ')' + '\n');
+            i++;
         }
     }
 
@@ -103,16 +108,43 @@ public class Parser {
 
     private List<Day> getTimeTable() {
         timeTable = new ArrayList<>();
-        fullWeekDays.addAll(0, dates);
-        dates.clear();
-        for (int i = 0; i < 6; i++) {
-            timeTable.add((new Day(fullWeekDays.get(i),
-                    fullWeekDays.get(i + 6), schedulePlace.get(i), teachers.get(i), groups.get(i),
-                    fullWeekDays.get(i + 12), schedulePlace.get(i + 6), teachers.get(i + 6), groups.get(i + 6),
-                    fullWeekDays.get(i + 18), schedulePlace.get(i + 12), teachers.get(i + 12), groups.get(i + 12),
-                    fullWeekDays.get(i + 24), schedulePlace.get(i + 18), teachers.get(i + 18), groups.get(i + 18),
-                    fullWeekDays.get(i + 30), schedulePlace.get(i + 24), teachers.get(i + 24), groups.get(i + 24))));
+        if ((fullWeekDays.get(5).equals(Emoji.CROSS.get())) && (fullWeekDays.get(11).equals(Emoji.CROSS.get()))
+                && (fullWeekDays.get(17).equals(Emoji.CROSS.get())) && (fullWeekDays.get(23).equals(Emoji.CROSS.get()))
+                && (fullWeekDays.get(29).equals(Emoji.CROSS.get()))) {
+            dates.set(5, "");
         }
+        for (int i = 0; i < 6; i++) {
+            ArrayList<String> paraFirst = new ArrayList<>();
+            ArrayList<String> paraSecond = new ArrayList<>();
+            ArrayList<String> paraThird = new ArrayList<>();
+            ArrayList<String> paraFourth = new ArrayList<>();
+            ArrayList<String> paraFifth = new ArrayList<>();
+            paraFirst.add(String.valueOf(new Para(fullWeekDays.get(i), schedulePlace.get(i), teachers.get(i), groups.get(i), 0)));
+            paraSecond.add(String.valueOf(new Para(fullWeekDays.get(i + 6), schedulePlace.get(i + 6), teachers.get(i + 6), groups.get(i + 6), 1)));
+            paraThird.add(String.valueOf(new Para(fullWeekDays.get(i + 12), schedulePlace.get(i + 12), teachers.get(i + 12), groups.get(i + 12), 2)));
+            paraFourth.add(String.valueOf(new Para(fullWeekDays.get(i + 18), schedulePlace.get(i + 18), teachers.get(i + 18), groups.get(i + 18), 3)));
+            paraFifth.add(String.valueOf(new Para(fullWeekDays.get(i + 24), schedulePlace.get(i + 24), teachers.get(i + 24), groups.get(i + 24), 4)));
+            if (fullWeekDays.get(i + 24).equals(Emoji.CROSS.get())) {
+                paraFifth.set(0, "");
+                if (fullWeekDays.get(i + 18).equals(Emoji.CROSS.get())) {
+                    paraFourth.set(0, "");
+                    if (fullWeekDays.get(i + 12).equals(Emoji.CROSS.get())) {
+                        paraThird.set(0, "");
+                        if (fullWeekDays.get(i + 6).equals(Emoji.CROSS.get())) {
+                            paraSecond.set(0, "");
+                            if (fullWeekDays.get(i).equals(Emoji.CROSS.get())) {
+                                paraFirst.set(0, "");
+
+                            }
+                        }
+                    }
+                }
+            }
+
+            timeTable.add(new Day(dates.get(i), paraFirst, paraSecond, paraThird, paraFourth, paraFifth));
+
+        }
+
         return this.timeTable;
     }
 

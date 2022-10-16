@@ -36,7 +36,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             long chatId = update.getMessage().getChatId();
             String messageText = update.getMessage().getText();
-            switch (messageText) {
+                switch (messageText) {
                 case "/start":
                     keyboardStart(chatId, Emoji.WELCOME.get());
                     keyboardStart(chatId, "Привет, " + update.getMessage().getChat().getFirstName() + ", рад тебя видеть");
@@ -50,7 +50,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 case "\uD83D\uDC68\u200D\uD83D\uDCBBАвторы\uD83D\uDC68\u200D\uD83D\uDCBB":
                     keyboardAuthorsProject(chatId);
                     break;
-                case "Предыдущая":
+                case "⏪Предыдущая":
                     numberOfWeek = -1;
                     callParser(chatId);
                     break;
@@ -58,13 +58,16 @@ public class TelegramBot extends TelegramLongPollingBot {
                     numberOfWeek = 0;
                     callParser(chatId);
                     break;
-                case "Следующая":
+                case "Следующая⏩":
                     numberOfWeek = 1;
                     callParser(chatId);
                     break;
                 case "Своя неделя":
                     numberOfWeek = Integer.parseInt(update.getMessage().getText());
                     callParser(chatId);
+                    break;
+                case "Посхалка":
+                    keyboardStart(chatId, "Комплимент дня: ты самый - самый");
                     break;
                 default:
                     keyboardStart(chatId, "sorry was not recognized");

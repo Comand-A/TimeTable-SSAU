@@ -7,7 +7,18 @@ public enum Emoji {
     CROWN(":crown:"),
     AUTHOR(":man_technologist:"),
     WELCOME(":wave:"),
-    CROSS(":x:");
+    CROSS(":x:"),
+    BACK(":leftwards_arrow_with_hook:"),
+    MEMO(":memo:"),
+    BALLOON(":balloon:"),
+    TADA(":tada:"),
+    PAST_WEEK(":rewind:"),
+    THIS_WEEK(":beach_with_umbrella:"),
+    NEXT_WEEK(":fast_forward:"),
+    PAINTBRUSH(":lower_left_paintbrush:"),
+    RULER(":triangular_ruler:"),
+    UNDERAGE(":underage:")
+    ;
 
     private final String value;
 

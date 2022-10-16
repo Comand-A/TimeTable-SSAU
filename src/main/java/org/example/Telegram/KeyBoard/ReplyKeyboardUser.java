@@ -39,7 +39,7 @@ public class ReplyKeyboardUser {
 
         rowOne = new KeyboardRow();
 
-        rowOne.add(NameButton.BACK.get());
+        rowOne.add(Emoji.BACK.get() + NameButton.BACK.get() + Emoji.BACK.get());
         keyboardRows.add(rowOne);
 
         keyboardMarkup.setKeyboard(keyboardRows);
@@ -54,14 +54,14 @@ public class ReplyKeyboardUser {
 
         rowOne = new KeyboardRow();
 
-        rowOne.add(NameButton.PAST_WEEK.get());
+        rowOne.add(Emoji.PAST_WEEK.get() + NameButton.PAST_WEEK.get());
         rowOne.add(NameButton.THIS_WEEK.get());
-        rowOne.add(NameButton.NEXT_WEEK.get());
+        rowOne.add(NameButton.NEXT_WEEK.get() + Emoji.NEXT_WEEK.get());
         keyboardRows.add(rowOne);
 
-        rowTwo =new KeyboardRow();
+        rowTwo = new KeyboardRow();
         rowTwo.add(NameButton.USER_WEEK.get());
-        rowTwo.add(NameButton.BACK.get());
+        rowTwo.add(Emoji.BACK.get() + NameButton.BACK.get() + Emoji.BACK.get());
 
         keyboardRows.add(rowTwo);
 

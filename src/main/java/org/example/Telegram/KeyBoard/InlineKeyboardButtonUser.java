@@ -43,14 +43,50 @@ public class InlineKeyboardButtonUser {
         initializationInlineKeyboard();
 
         InlineKeyboardButton button = new InlineKeyboardButton();
-
         button.setText(Emoji.CROWN.get() + Direction.FIIT.get() + Emoji.CROWN.get());
         button.setCallbackData(Direction.FIIT.get());
         rowInLine.add(button);
 
+        button = new InlineKeyboardButton();
         button.setText(Direction.PMF.get());
         button.setCallbackData(Direction.PMF.get());
+        rowInLine.add(button);
 
+        button = new InlineKeyboardButton();
+        button.setText(Direction.PMI.get());
+        button.setCallbackData(Direction.PMI.get());
+        rowInLine.add(button);
+
+        rowsInLine.add(rowInLine);
+
+        rowInLine = new ArrayList<>();
+
+        button = new InlineKeyboardButton();
+        button.setText(Direction.IVT.get());
+        button.setCallbackData(Direction.IVT.get());
+        rowInLine.add(button);
+
+        button = new InlineKeyboardButton();
+        button.setText(Direction.RADIO_TECH.get());
+        button.setCallbackData(Direction.RADIO_TECH.get());
+        rowInLine.add(button);
+
+        rowsInLine.add(rowInLine);
+
+        rowInLine = new ArrayList<>();
+
+        button = new InlineKeyboardButton();
+        button.setText(Direction.ELECTRONICS.get());
+        button.setCallbackData(Direction.ELECTRONICS.get());
+        rowInLine.add(button);
+
+        rowsInLine.add(rowInLine);
+
+        rowInLine = new ArrayList<>();
+
+        button = new InlineKeyboardButton();
+        button.setText(Direction.BIOTECH.get());
+        button.setCallbackData(Direction.BIOTECH.get());
         rowInLine.add(button);
 
         rowsInLine.add(rowInLine);

@@ -9,7 +9,7 @@ public enum Direction {
     IVT("ИВТ"),
     RADIO_TECH("РАДИОТЕХНИКА"),
     ELECTRONICS("ЭЛЕКТРОНИКА И НАНОЭЛЕКТРОНИКА"),
-    BIOTECH("БИОТЕХНИЧЕСКИЕ СИСТЕМЫ И ТЕХНОЛОГИИ");
+    BIOTECH("БИО СИС И ТЕХНОЛОГИИ");
 
     private final String value;
 

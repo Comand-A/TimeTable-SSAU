@@ -8,6 +8,7 @@ import org.example.Telegram.KeyBoard.ReplyKeyboardUser;
 import org.example.Telegram.Model.Emoji;
 import org.example.Telegram.Model.Direction;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -41,7 +42,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                     keyboardStart(chatId, Emoji.WELCOME.get());
                     keyboardStart(chatId, "Привет, " + update.getMessage().getChat().getFirstName() + ", рад тебя видеть");
                     break;
-                case "Назад":
+                case "↩Назад↩":
                     keyboardStart(chatId, "Вернулись...");
                     break;
                 case "\uD83D\uDE80К расписанию\uD83D\uDE80":
@@ -98,7 +99,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 messageText.setChatId(String.valueOf(chatId));
                 messageText.setText("Вы выбрали группу № " + callbackData);
                 messageText.setMessageId((int) messageId);
-                sendMessageEditText(messageText);
+                sendMessage(messageText);
 
                 initializeDirectionIIK(directionOfGroup.get(0),directionOfGroup.get(1));
 
@@ -144,8 +145,10 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private void keyboardAuthorsProject(long chatId) {
         SendMessage message = new SendMessage();
+        message.enableHtml(true);
         message.setChatId(chatId);
-        message.setText("Цуканов Егор(Владелец проекта)\n\n\nАрсений Замулин(Вспомогательные руки)");
+        message.setText("Студенты 1 курса Самарского Университета\n\n<a href='https://vk.com/etsukanov0'><i>Егор Цуканов</i></a>\nБИО: Разработчик (Автор идеи)" +
+                "\n\n<a href='https://vk.com/arsenk1ng'><i>Арсений Замулин</i></a>\nБИО: Разработчик");
 
         ReplyKeyboardUser replyKeyboard = new ReplyKeyboardUser();
 
@@ -161,7 +164,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private void sendMessageEditText(EditMessageText message) {
+    private void sendMessage(EditMessageText message) {
         try {
             execute(message);
         } catch (TelegramApiException e) {
@@ -187,7 +190,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         messageText.setText("Вы выбрали направление " + nameDirection);
         messageText.setMessageId((int) messageId);
 
-        sendMessageEditText(messageText);
+        sendMessage(messageText);
 
         InlineKeyboardButtonUser lineKeyboard = new InlineKeyboardButtonUser();
         sendMessage(lineKeyboard.choiceOfGroupNumber(chatId, amountGroup));

@@ -23,8 +23,8 @@ public class IIKFirstCourse {
         put(Direction.IVT.get() + "4", "531872709");
         put(Direction.IVT.get() + "5", "755922552");
         put(Direction.IVT.get() + "6", "762577998");
-        put(Direction.RADIO_TECH.get(), "804399515");
-        put(Direction.ELECTRONICS.get(), "804433186");
+        put(Direction.RADIO_TECH.get()+ "1", "804399515");
+        put(Direction.ELECTRONICS.get()+ "1", "804433186");
         put(Direction.BIOTECH.get() + "1", "804435060");
         put(Direction.BIOTECH.get() + "2", "804435212");
         put(Direction.PMF.get() + "1", "755922274");

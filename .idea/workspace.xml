@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a02f544-0b08-43d9-9c6c-c754134f900e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Parser/Para.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIKFirstCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIKFirstCourse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Parser/Day.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Parser/Day.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Parser/Para.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Parser/Para.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Parser/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InlineKeyboardButtonUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InlineKeyboardButtonUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/ReplyKeyboardUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/ReplyKeyboardUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Model/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Model/Direction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Model/Emoji.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Model/Emoji.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Service/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Service/TelegramBot.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -146,8 +141,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Spring Boot.TimeTableBot" />
-        <item itemvalue="Spring Boot.Main" />
         <item itemvalue="Application.TimeTableBot" />
         <item itemvalue="Application.BotInitializer" />
       </list>

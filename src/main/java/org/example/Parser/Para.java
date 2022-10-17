@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Para {
-    ArrayList<String> timePara = new ArrayList<>(Arrays.asList("\n08:00 - 09:35: ", "\n09:45 - 11:20: ", "\n11:30 - 13:05: ", "\n13:30 - 15:05: ", "\n15:15 - 16:50: "));
+    ArrayList<String> timePara = new ArrayList<>(Arrays.asList("\n08:00 - 09:35: ", "\n09:45 - 11:20: ", "\n11:30 - 13:05: ", "\n13:30 - 15:05: ", "\n15:15 - 16:50: ","\n17:00 - 18:35: "));
 
     public Para(String para, String place, String teacher, String group, int numberPara) {
         this.numberPara = numberPara;

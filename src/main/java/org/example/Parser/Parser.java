@@ -113,38 +113,47 @@ public class Parser {
                 && (fullWeekDays.get(29).equals(Emoji.CROSS.get()))) {
             dates.set(5, "");
         }
+        if (fullWeekDays.size() <= 30) {
+            for (int i = 0; i < 6; i++) {
+                fullWeekDays.add(Emoji.CROSS.get());
+                schedulePlace.add("");
+                teachers.add("");
+                groups.add("");
+            }
+        }
         for (int i = 0; i < 6; i++) {
             ArrayList<String> paraFirst = new ArrayList<>();
             ArrayList<String> paraSecond = new ArrayList<>();
             ArrayList<String> paraThird = new ArrayList<>();
             ArrayList<String> paraFourth = new ArrayList<>();
             ArrayList<String> paraFifth = new ArrayList<>();
+            ArrayList<String> paraSixth = new ArrayList<>();
             paraFirst.add(String.valueOf(new Para(fullWeekDays.get(i), schedulePlace.get(i), teachers.get(i), groups.get(i), 0)));
             paraSecond.add(String.valueOf(new Para(fullWeekDays.get(i + 6), schedulePlace.get(i + 6), teachers.get(i + 6), groups.get(i + 6), 1)));
             paraThird.add(String.valueOf(new Para(fullWeekDays.get(i + 12), schedulePlace.get(i + 12), teachers.get(i + 12), groups.get(i + 12), 2)));
             paraFourth.add(String.valueOf(new Para(fullWeekDays.get(i + 18), schedulePlace.get(i + 18), teachers.get(i + 18), groups.get(i + 18), 3)));
             paraFifth.add(String.valueOf(new Para(fullWeekDays.get(i + 24), schedulePlace.get(i + 24), teachers.get(i + 24), groups.get(i + 24), 4)));
-            if (fullWeekDays.get(i + 24).equals(Emoji.CROSS.get())) {
-                paraFifth.set(0, "");
-                if (fullWeekDays.get(i + 18).equals(Emoji.CROSS.get())) {
-                    paraFourth.set(0, "");
-                    if (fullWeekDays.get(i + 12).equals(Emoji.CROSS.get())) {
-                        paraThird.set(0, "");
-                        if (fullWeekDays.get(i + 6).equals(Emoji.CROSS.get())) {
-                            paraSecond.set(0, "");
-                            if (fullWeekDays.get(i).equals(Emoji.CROSS.get())) {
-                                paraFirst.set(0, "");
-
+            paraSixth.add(String.valueOf(new Para(fullWeekDays.get(i + 30), schedulePlace.get(i + 30), teachers.get(i + 30), groups.get(i + 30), 5)));
+            if (fullWeekDays.get(i + 30).equals(Emoji.CROSS.get())) {
+                paraSixth.set(0, "");
+                if (fullWeekDays.get(i + 24).equals(Emoji.CROSS.get())) {
+                    paraFifth.set(0, "");
+                    if (fullWeekDays.get(i + 18).equals(Emoji.CROSS.get())) {
+                        paraFourth.set(0, "");
+                        if (fullWeekDays.get(i + 12).equals(Emoji.CROSS.get())) {
+                            paraThird.set(0, "");
+                            if (fullWeekDays.get(i + 6).equals(Emoji.CROSS.get())) {
+                                paraSecond.set(0, "");
+                                if (fullWeekDays.get(i).equals(Emoji.CROSS.get())) {
+                                    paraFirst.set(0, "");
+                                }
                             }
                         }
                     }
                 }
             }
-
-            timeTable.add(new Day(dates.get(i), paraFirst, paraSecond, paraThird, paraFourth, paraFifth));
-
+            timeTable.add(new Day(dates.get(i), paraFirst, paraSecond, paraThird, paraFourth, paraFifth, paraSixth));
         }
-
         return this.timeTable;
     }
 

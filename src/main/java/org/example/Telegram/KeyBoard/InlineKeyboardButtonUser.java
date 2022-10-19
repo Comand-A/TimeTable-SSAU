@@ -8,7 +8,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InlineKeyboardButtonUser {
     private SendMessage message;
@@ -97,12 +99,12 @@ public class InlineKeyboardButtonUser {
 
     }
 
-    public SendMessage choiceOfGroupNumber(long chatId, int amount) {
+    public SendMessage setOfGroupNumber(long chatId, List<String> amount) {
        initializationMessage(chatId, "Выберите номер вашей группы");
 
         initializationInlineKeyboard();
-        for (int i = 1; i <= amount; i++) {
-            initializationButton(String.valueOf(i));
+        for (int i = 0; i < amount.size(); i++) {
+            initializationButton(amount.get(i));
         }
 
         rowsInLine.add(rowInLine);

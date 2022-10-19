@@ -52,25 +52,21 @@ public class Parser {
 
     private ArrayList<String> getCycle(ArrayList<String> cssQueryList) {
         ArrayList<String> volatileDataCollector = new ArrayList<>();
-        Elements countMonday = table.select((cssQueryList.get(0)));
-        Elements countAnotherDays = table.select(cssQueryList.get(2));
-        for (Element place : countMonday) {
-            volatileDataCollector.add(place.select(cssQueryList.get(1)).text());
-        }
+        Elements countAnotherDays = table.select(cssQueryList.get(1));
         for (Element place : countAnotherDays) {
-            volatileDataCollector.add(place.select(cssQueryList.get(1)).text());
+            volatileDataCollector.add(place.select(cssQueryList.get(0)).text());
         }
         return volatileDataCollector;
     }
 
     private void getSchedulePlace() {
-        cssQueryList = new ArrayList<>(Arrays.asList("div[class=schedule__item schedule__item_show]", "div[class=caption-text schedule__place]", "div[class=schedule__item]"));
+        cssQueryList = new ArrayList<>(Arrays.asList("div[class=caption-text schedule__place]", "div[class=schedule__item]"));
         schedulePlace = getCycle(cssQueryList);
     }
 
 
     private void getGroups() {
-        cssQueryList = new ArrayList<>(Arrays.asList("div[class=schedule__item schedule__item_show]", "div[class=schedule__groups]", "div[class=schedule__item]"));
+        cssQueryList = new ArrayList<>(Arrays.asList("div[class=schedule__groups]", "div[class=schedule__item]"));
         groups = getCycle(cssQueryList);
         for (int i = 0; i < groups.size(); i++) {
             if (groups.get(i).equals("")) groups.set(i, "Вся группа");
@@ -78,7 +74,7 @@ public class Parser {
     }
 
     private void getTeacher() {
-        cssQueryList = new ArrayList<>(Arrays.asList("div[class=schedule__item schedule__item_show]", "div[class=schedule__teacher]", "div[class=schedule__item]"));
+        cssQueryList = new ArrayList<>(Arrays.asList("div[class=schedule__teacher]", "div[class=schedule__item]"));
         teachers = getCycle(cssQueryList);
     }
 
@@ -97,14 +93,14 @@ public class Parser {
     }
 
     private void getFullWeekDays() {
-        String[] cssQueryArray = {"div[class=schedule__item]", "div[class=body-text schedule__discipline lesson-color lesson-color-type-", "1]", "2]", "3]", "4]"};
-        Elements allDay = table.select(cssQueryArray[0]);
+        cssQueryList =new ArrayList<>(Arrays.asList("div[class=schedule__item]", "div[class=body-text schedule__discipline lesson-color lesson-color-type-", "1]", "2]", "3]", "4]"));
+        Elements allDay = table.select(cssQueryList.get(0));
         fullWeekDays = new ArrayList<>();
         for (Element day : allDay) {
-            if (!day.select(cssQueryArray[0]).text().equals("")) {
+            if (!day.select(cssQueryList.get(0)).text().equals("")) {
                 for (int j = 2; j < 5; j++) {
-                    if (!day.select(cssQueryArray[1] + cssQueryArray[j]).text().equals("")) {
-                        fullWeekDays.add(day.select(cssQueryArray[1] + cssQueryArray[j]).text());
+                    if (!day.select(cssQueryList.get(1) + cssQueryList.get(j)).text().equals("")) {
+                        fullWeekDays.add(day.select(cssQueryList.get(1) + cssQueryList.get(j)).text());
                     }
                 }
             } else {

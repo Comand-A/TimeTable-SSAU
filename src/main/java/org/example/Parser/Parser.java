@@ -13,16 +13,23 @@ import java.util.*;
 public class Parser {
     private Document page;
     private Element table;
-    private ArrayList<String> schedulePlace, dates, fullWeekDays, teachers, groups, volatileDataCollector, cssQueryList;
+    private ArrayList<String> schedulePlace;
+    private ArrayList<String> dates;
+    private ArrayList<String> fullWeekDays;
+    private ArrayList<String> teachers;
+    private ArrayList<String> groups;
+    private ArrayList<String> cssQueryList;
     private List<Day> timeTable;
-    private String idDirection, numberOfWeek;
+    private final String idDirection;
+    private String numberOfWeek;
 
 
-    public Parser(String idDirection, long numberOfWeek) {
+    public Parser(String idDirection, long numberOfWeekUser, boolean criterion) {
         this.idDirection = idDirection;
         RealDate realDate = new RealDate();
         try {
-            this.numberOfWeek = realDate.getNumberOfWeek(numberOfWeek);
+            if (criterion) this.numberOfWeek = String.valueOf(numberOfWeekUser);
+            else this.numberOfWeek = realDate.getNumberOfWeek(numberOfWeekUser);
             page = getPage();
             table = page.select("div[class=schedule__items]").first();
 
@@ -44,7 +51,7 @@ public class Parser {
     }
 
     private ArrayList<String> getCycle(ArrayList<String> cssQueryList) {
-        volatileDataCollector = new ArrayList<>();
+        ArrayList<String> volatileDataCollector = new ArrayList<>();
         Elements countMonday = table.select((cssQueryList.get(0)));
         Elements countAnotherDays = table.select(cssQueryList.get(2));
         for (Element place : countMonday) {
@@ -65,7 +72,7 @@ public class Parser {
     private void getGroups() {
         cssQueryList = new ArrayList<>(Arrays.asList("div[class=schedule__item schedule__item_show]", "div[class=schedule__groups]", "div[class=schedule__item]"));
         groups = getCycle(cssQueryList);
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < groups.size(); i++) {
             if (groups.get(i).equals("")) groups.set(i, "Вся группа");
         }
     }
@@ -108,12 +115,8 @@ public class Parser {
 
     private List<Day> getTimeTable() {
         timeTable = new ArrayList<>();
-        if ((fullWeekDays.get(5).equals(Emoji.CROSS.get())) && (fullWeekDays.get(11).equals(Emoji.CROSS.get()))
-                && (fullWeekDays.get(17).equals(Emoji.CROSS.get())) && (fullWeekDays.get(23).equals(Emoji.CROSS.get()))
-                && (fullWeekDays.get(29).equals(Emoji.CROSS.get()))) {
-            dates.set(5, "");
-        }
-        if (fullWeekDays.size() <= 30) {
+
+        while (fullWeekDays.size() <= 36) {
             for (int i = 0; i < 6; i++) {
                 fullWeekDays.add(Emoji.CROSS.get());
                 schedulePlace.add("");
@@ -121,38 +124,38 @@ public class Parser {
                 groups.add("");
             }
         }
+        if ((fullWeekDays.get(5).equals(Emoji.CROSS.get())) && (fullWeekDays.get(11).equals(Emoji.CROSS.get()))
+                && (fullWeekDays.get(17).equals(Emoji.CROSS.get())) && (fullWeekDays.get(23).equals(Emoji.CROSS.get()))
+                && (fullWeekDays.get(29).equals(Emoji.CROSS.get()))) {
+            dates.set(5, "");
+        }
         for (int i = 0; i < 6; i++) {
-            ArrayList<String> paraFirst = new ArrayList<>();
-            ArrayList<String> paraSecond = new ArrayList<>();
-            ArrayList<String> paraThird = new ArrayList<>();
-            ArrayList<String> paraFourth = new ArrayList<>();
-            ArrayList<String> paraFifth = new ArrayList<>();
-            ArrayList<String> paraSixth = new ArrayList<>();
-            paraFirst.add(String.valueOf(new Para(fullWeekDays.get(i), schedulePlace.get(i), teachers.get(i), groups.get(i), 0)));
-            paraSecond.add(String.valueOf(new Para(fullWeekDays.get(i + 6), schedulePlace.get(i + 6), teachers.get(i + 6), groups.get(i + 6), 1)));
-            paraThird.add(String.valueOf(new Para(fullWeekDays.get(i + 12), schedulePlace.get(i + 12), teachers.get(i + 12), groups.get(i + 12), 2)));
-            paraFourth.add(String.valueOf(new Para(fullWeekDays.get(i + 18), schedulePlace.get(i + 18), teachers.get(i + 18), groups.get(i + 18), 3)));
-            paraFifth.add(String.valueOf(new Para(fullWeekDays.get(i + 24), schedulePlace.get(i + 24), teachers.get(i + 24), groups.get(i + 24), 4)));
-            paraSixth.add(String.valueOf(new Para(fullWeekDays.get(i + 30), schedulePlace.get(i + 30), teachers.get(i + 30), groups.get(i + 30), 5)));
+            ArrayList<String> pairs = new ArrayList<>();
+            pairs.add(String.valueOf(new Para(fullWeekDays.get(i), schedulePlace.get(i), teachers.get(i), groups.get(i), 0)));
+            pairs.add(String.valueOf(new Para(fullWeekDays.get(i + 6), schedulePlace.get(i + 6), teachers.get(i + 6), groups.get(i + 6), 1)));
+            pairs.add(String.valueOf(new Para(fullWeekDays.get(i + 12), schedulePlace.get(i + 12), teachers.get(i + 12), groups.get(i + 12), 2)));
+            pairs.add(String.valueOf(new Para(fullWeekDays.get(i + 18), schedulePlace.get(i + 18), teachers.get(i + 18), groups.get(i + 18), 3)));
+            pairs.add(String.valueOf(new Para(fullWeekDays.get(i + 24), schedulePlace.get(i + 24), teachers.get(i + 24), groups.get(i + 24), 4)));
+            pairs.add(String.valueOf(new Para(fullWeekDays.get(i + 30), schedulePlace.get(i + 30), teachers.get(i + 30), groups.get(i + 30), 5)));
             if (fullWeekDays.get(i + 30).equals(Emoji.CROSS.get())) {
-                paraSixth.set(0, "");
+                pairs.set(5, "");
                 if (fullWeekDays.get(i + 24).equals(Emoji.CROSS.get())) {
-                    paraFifth.set(0, "");
+                    pairs.set(4, "");
                     if (fullWeekDays.get(i + 18).equals(Emoji.CROSS.get())) {
-                        paraFourth.set(0, "");
+                        pairs.set(3, "");
                         if (fullWeekDays.get(i + 12).equals(Emoji.CROSS.get())) {
-                            paraThird.set(0, "");
+                            pairs.set(2, "");
                             if (fullWeekDays.get(i + 6).equals(Emoji.CROSS.get())) {
-                                paraSecond.set(0, "");
+                                pairs.set(1, "");
                                 if (fullWeekDays.get(i).equals(Emoji.CROSS.get())) {
-                                    paraFirst.set(0, "");
+                                    pairs.set(0, "");
                                 }
                             }
                         }
                     }
                 }
             }
-            timeTable.add(new Day(dates.get(i), paraFirst, paraSecond, paraThird, paraFourth, paraFifth, paraSixth));
+            timeTable.add(new Day(dates.get(i), pairs.get(0), pairs.get(1), pairs.get(2), pairs.get(3), pairs.get(4), pairs.get(5)));
         }
         return this.timeTable;
     }

@@ -5,7 +5,7 @@ import org.example.Telegram.Model.Direction;
 import java.util.HashMap;
 import java.util.Map;
 
-public class IIKFirstCourse {
+public class IIKFirstCourseId {
     public Map<String, String> map = new HashMap<String, String>() {{
         put(Direction.PMI.get() + "1", "755921059");
         put(Direction.PMI.get() + "2", "755921402");
@@ -32,12 +32,12 @@ public class IIKFirstCourse {
     }};
     private String directionOfGroup;
 
-    public IIKFirstCourse(String direction, String numberGroup) {
+    public IIKFirstCourseId(String direction, String numberGroup) {
         this.directionOfGroup = direction + numberGroup;
 
     }
 
-    public String initializeDirectionUser() {
+    public String getIdDirectionUser() {
         return map.get(directionOfGroup);
     }
 

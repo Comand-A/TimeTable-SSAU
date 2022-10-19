@@ -14,6 +14,7 @@ public class RealDate {
     private Document page;
     private Element table;
     private String realDate;
+
     private void getPage() throws IOException {
 
         String url = "https://www.xn----7sbanbef0eh1ai8n.xn--p1ai/";
@@ -21,6 +22,7 @@ public class RealDate {
         table = page.select("ul[class=text-center]").first();
         realDate = table.select("span").first().text();
     }
+
     public String getNumberOfWeek(long number) throws IOException {
         getPage();
         long millisecondsInOneWeek = 604800000;
@@ -32,6 +34,7 @@ public class RealDate {
             throw new RuntimeException(e);
         }
         long numberOfWeek = (((realDateInDate.getTime() - begin.getTime()) / millisecondsInOneWeek) + 1);
-        return String.valueOf(numberOfWeek+number);
+
+        return String.valueOf(numberOfWeek + number);
     }
 }

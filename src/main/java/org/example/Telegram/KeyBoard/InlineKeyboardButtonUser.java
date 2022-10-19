@@ -41,7 +41,6 @@ public class InlineKeyboardButtonUser {
         initializationMessage(chatId, "Выберите ваше направление");
 
         initializationInlineKeyboard();
-
         InlineKeyboardButton button = new InlineKeyboardButton();
         button.setText(Emoji.CROWN.get() + Direction.FIIT.get() + Emoji.CROWN.get());
         button.setCallbackData(Direction.FIIT.get());

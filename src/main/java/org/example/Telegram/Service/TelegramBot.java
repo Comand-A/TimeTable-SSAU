@@ -1,9 +1,11 @@
 package org.example.Telegram.Service;
 
-import org.example.DirectionSSAU.IIKDirectionOfGroupFirstCourse;
-import org.example.DirectionSSAU.IIKFirstCourseId;
+import org.example.DirectionSSAU.IIK.IIKCourse;
+import org.example.DirectionSSAU.IIK.IIKDirectionOfGroupFirstCourse;
+import org.example.DirectionSSAU.IIK.IIKFirstCourseId;
 import org.example.Parser.Day;
 import org.example.Parser.Parser;
+import org.example.Telegram.KeyBoard.InLineKeyboardButtonOfCourses;
 import org.example.Telegram.KeyBoard.InlineKeyboardButtonUser;
 import org.example.Telegram.KeyBoard.ReplyKeyboardUser;
 import org.example.Telegram.Model.Emoji;
@@ -48,7 +50,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                         keyboardStart(chatId, "Вернулись...");
                         break;
                     case "\uD83D\uDE80К расписанию\uD83D\uDE80":
-                        choiceOfDirection(chatId);
+                        choiceOfCourse(chatId);
                         break;
                     case "\uD83D\uDC68\u200D\uD83D\uDCBBАвторы\uD83D\uDC68\u200D\uD83D\uDCBB":
                         keyboardAuthorsProject(chatId);
@@ -84,13 +86,20 @@ public class TelegramBot extends TelegramLongPollingBot {
             long messageId = update.getCallbackQuery().getMessage().getMessageId();
             long chatId = update.getCallbackQuery().getMessage().getChatId();
 
-            if (checkAvailabilityDirection(callbackData))
-                executeEditMessageText(chatId, messageId, callbackData, getDirectionOfGroup(callbackData), "Вы выбрали направление ", true);
+            if (checkAvailabilityCoursesOfDirection(callbackData))
+                executeEditMessageText(chatId, messageId, callbackData, getDirectionOfCourses(callbackData), "Вы выбрали Курс ");
+            else if (checkAvailabilityDirection(callbackData))
+                executeEditMessageText(chatId, messageId, callbackData, getGroupOfDirection(callbackData), "Вы выбрали направление ");
             else {
                 directionOfGroup.add(callbackData);
-                executeEditMessageText(chatId, messageId, callbackData, null, "Вы выбрали группу № ", false);
+                executeEditMessageText(chatId, messageId, callbackData, null, "Вы выбрали группу № ");
             }
         }
+    }
+
+    private boolean checkAvailabilityCoursesOfDirection(String course) {
+        IIKCourse iikCourse = new IIKCourse(course);
+        return iikCourse.checkAvailabilityCoursesOfDirection();
     }
 
     public int tryParseInt(String value, int defaultVal) {
@@ -101,31 +110,39 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private void executeEditMessageText(long chatId, long messageId, String nameDirection, List<String> amountGroup, String message, boolean answer) {
+    private void executeEditMessageText(long chatId, long messageId, String nameDirection, List<String> volatileData, String message) {
         EditMessageText messageText = new EditMessageText();
         messageText.setChatId(String.valueOf(chatId));
         messageText.setText(message + nameDirection);
         messageText.setMessageId((int) messageId);
 
         sendMessage(messageText);
-        if (answer) {
+        if (checkAvailabilityCoursesOfDirection(nameDirection)) {
             InlineKeyboardButtonUser lineKeyboard = new InlineKeyboardButtonUser();
-            sendMessage(lineKeyboard.setOfGroupNumber(chatId, amountGroup));
+            sendMessage(lineKeyboard.choiceOfDirectionIIK(chatId,volatileData));
             directionOfGroup = new ArrayList<>(Collections.singletonList(nameDirection));
+        } else if (checkAvailabilityDirection(nameDirection)) {
+            InlineKeyboardButtonUser lineKeyboard = new InlineKeyboardButtonUser();
+            sendMessage(lineKeyboard.setOfGroupNumber(chatId, volatileData));
+            directionOfGroup.add(nameDirection);
         } else {
-            getIdDirectionUser(directionOfGroup.get(0), directionOfGroup.get(1));
+            getIdDirectionUser(directionOfGroup);
             keyboardChooseWeek(chatId);
         }
     }
 
-    private void getIdDirectionUser(String direction, String numberGroup) {
-        IIKFirstCourseId iikFirstCourseId = new IIKFirstCourseId(direction, numberGroup);
+    private void getIdDirectionUser(ArrayList<String> directionOfGroup) {
+        IIKFirstCourseId iikFirstCourseId = new IIKFirstCourseId(directionOfGroup);
         idDirection = iikFirstCourseId.getIdDirectionUser();
     }
+    private List<String> getDirectionOfCourses(String directionOfGroup) {
+        IIKCourse iikCourse = new IIKCourse(directionOfGroup);
+        return iikCourse.getDirectionUser();
+    }
 
-    private List<String> getDirectionOfGroup(String direction) {
+    private List<String> getGroupOfDirection(String direction) {
         IIKDirectionOfGroupFirstCourse iikFirstCourse = new IIKDirectionOfGroupFirstCourse(direction);
-        return iikFirstCourse.getDirectionUser();
+        return iikFirstCourse.getGroupUser();
     }
 
     private boolean checkAvailabilityDirection(String direction) {
@@ -155,11 +172,10 @@ public class TelegramBot extends TelegramLongPollingBot {
         sendMessage(message);
     }
 
-    private void choiceOfDirection(long chatId) {
-        InlineKeyboardButtonUser inlineKeyboardButtonUser = new InlineKeyboardButtonUser();
-        SendMessage message = inlineKeyboardButtonUser.choiceOfDirection(chatId);
+    private void choiceOfCourse(long chatId) {
+        InLineKeyboardButtonOfCourses inLineKeyboardButtonOfCourses = new InLineKeyboardButtonOfCourses();
+        SendMessage message = inLineKeyboardButtonOfCourses.choiceOfCourse(chatId);
         sendMessage(message);
-
     }
 
 

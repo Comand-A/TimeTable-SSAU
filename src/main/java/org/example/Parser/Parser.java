@@ -93,7 +93,7 @@ public class Parser {
     }
 
     private void getFullWeekDays() {
-        cssQueryList =new ArrayList<>(Arrays.asList("div[class=schedule__item]", "div[class=body-text schedule__discipline lesson-color lesson-color-type-", "1]", "2]", "3]", "4]"));
+        cssQueryList = new ArrayList<>(Arrays.asList("div[class=schedule__item]", "div[class=body-text schedule__discipline lesson-color lesson-color-type-", "1]", "2]", "3]", "4]"));
         Elements allDay = table.select(cssQueryList.get(0));
         fullWeekDays = new ArrayList<>();
         for (Element day : allDay) {
@@ -145,6 +145,24 @@ public class Parser {
                                 pairs.set(1, "");
                                 if (fullWeekDays.get(i).equals(Emoji.CROSS.get())) {
                                     pairs.set(0, "");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (fullWeekDays.get(i).equals(Emoji.CROSS.get())) {
+                pairs.set(0, "");
+                if (fullWeekDays.get(i + 6).equals(Emoji.CROSS.get())) {
+                    pairs.set(1, "");
+                    if (fullWeekDays.get(i + 12).equals(Emoji.CROSS.get())) {
+                        pairs.set(2, "");
+                        if (fullWeekDays.get(i + 18).equals(Emoji.CROSS.get())) {
+                            pairs.set(3, "");
+                            if (fullWeekDays.get(i + 24).equals(Emoji.CROSS.get())) {
+                                pairs.set(4, "");
+                                if (fullWeekDays.get(i+30).equals(Emoji.CROSS.get())) {
+                                    pairs.set(5, "");
                                 }
                             }
                         }

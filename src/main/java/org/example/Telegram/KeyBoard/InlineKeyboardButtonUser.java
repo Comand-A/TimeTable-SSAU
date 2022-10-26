@@ -1,16 +1,15 @@
 package org.example.Telegram.KeyBoard;
 
+
+import org.example.Telegram.Model.DirectionIIK;
 import org.example.Telegram.Model.Emoji;
-import org.example.Telegram.Model.Direction;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class InlineKeyboardButtonUser {
     private SendMessage message;
@@ -18,6 +17,7 @@ public class InlineKeyboardButtonUser {
     private List<List<InlineKeyboardButton>> rowsInLine;
     private List<InlineKeyboardButton> rowInLine;
     private InlineKeyboardButton button;
+    private final DirectionIIK[] directionIIK = DirectionIIK.values();
 
     private void initializationMessage(long chatId, String textSend) {
         message = new SendMessage();
@@ -39,58 +39,76 @@ public class InlineKeyboardButtonUser {
 
     }
 
-    public SendMessage choiceOfDirection(long chatId) {
+    public SendMessage choiceOfDirectionIIK(long chatId, List<String> directionOfCourse) {
         initializationMessage(chatId, "Выберите ваше направление");
 
         initializationInlineKeyboard();
-        InlineKeyboardButton button = new InlineKeyboardButton();
-        button.setText(Emoji.CROWN.get() + Direction.FIIT.get() + Emoji.CROWN.get());
-        button.setCallbackData(Direction.FIIT.get());
-        rowInLine.add(button);
 
-        button = new InlineKeyboardButton();
-        button.setText(Direction.PMF.get());
-        button.setCallbackData(Direction.PMF.get());
-        rowInLine.add(button);
 
-        button = new InlineKeyboardButton();
-        button.setText(Direction.PMI.get());
-        button.setCallbackData(Direction.PMI.get());
-        rowInLine.add(button);
+        int i = 0;
+        for (String s : directionOfCourse) {
+            if (s.length() <= 12 && i < 3) {
+                initializationButton(s);
+                i++;
+            } else {
+                rowInLine = new ArrayList<>();
+                initializationButton(s);
+                i = 1;
+                rowsInLine.add(rowInLine);
+            }
+            if (i==3)
+                rowsInLine.add(rowInLine);
+        }
 
-        rowsInLine.add(rowInLine);
 
-        rowInLine = new ArrayList<>();
+//        button = new InlineKeyboardButton();
+//        button.setText(Emoji.CROWN.get() + DirectionIIK.FIIT.get() + Emoji.CROWN.get());
+//        button.setCallbackData(DirectionIIK.FIIT.get());
+//        rowInLine.add(button);
+//
+//
+//        button = new InlineKeyboardButton();
+//        button.setText(DirectionIIK.PMF.get());
+//        button.setCallbackData(DirectionIIK.PMF.get());
+//        rowInLine.add(button);
+//
+//        button = new InlineKeyboardButton();
+//        button.setText(DirectionIIK.PMI.get());
+//        button.setCallbackData(DirectionIIK.PMI.get());
+//        rowInLine.add(button);
+//
+//        rowsInLine.add(rowInLine);
+//
+//        rowInLine = new ArrayList<>();
+//
+//        button = new InlineKeyboardButton();
+//        button.setText(DirectionIIK.IVT.get());
+//        button.setCallbackData(DirectionIIK.IVT.get());
+//        rowInLine.add(button);
+//
+//        button = new InlineKeyboardButton();
+//        button.setText(DirectionIIK.RADIO_TECH.get());
+//        button.setCallbackData(DirectionIIK.RADIO_TECH.get());
+//        rowInLine.add(button);
+//
+//        rowsInLine.add(rowInLine);
+//
+//        rowInLine = new ArrayList<>();
+//
+//        button = new InlineKeyboardButton();
+//        button.setText(DirectionIIK.ELECTRONICS.get());
+//        button.setCallbackData(DirectionIIK.ELECTRONICS.get());
+//        rowInLine.add(button);
+//
+//        rowsInLine.add(rowInLine);
+//
+//        rowInLine = new ArrayList<>();
+//
+//        button = new InlineKeyboardButton();
+//        button.setText(DirectionIIK.BIO_TECH.get());
+//        button.setCallbackData(DirectionIIK.BIO_TECH.get());
+//        rowInLine.add(button);
 
-        button = new InlineKeyboardButton();
-        button.setText(Direction.IVT.get());
-        button.setCallbackData(Direction.IVT.get());
-        rowInLine.add(button);
-
-        button = new InlineKeyboardButton();
-        button.setText(Direction.RADIO_TECH.get());
-        button.setCallbackData(Direction.RADIO_TECH.get());
-        rowInLine.add(button);
-
-        rowsInLine.add(rowInLine);
-
-        rowInLine = new ArrayList<>();
-
-        button = new InlineKeyboardButton();
-        button.setText(Direction.ELECTRONICS.get());
-        button.setCallbackData(Direction.ELECTRONICS.get());
-        rowInLine.add(button);
-
-        rowsInLine.add(rowInLine);
-
-        rowInLine = new ArrayList<>();
-
-        button = new InlineKeyboardButton();
-        button.setText(Direction.BIOTECH.get());
-        button.setCallbackData(Direction.BIOTECH.get());
-        rowInLine.add(button);
-
-        rowsInLine.add(rowInLine);
 
         markupInLine.setKeyboard(rowsInLine);
         message.setReplyMarkup(markupInLine);
@@ -100,11 +118,11 @@ public class InlineKeyboardButtonUser {
     }
 
     public SendMessage setOfGroupNumber(long chatId, List<String> amount) {
-       initializationMessage(chatId, "Выберите номер вашей группы");
+        initializationMessage(chatId, "Выберите номер вашей группы");
 
         initializationInlineKeyboard();
-        for (int i = 0; i < amount.size(); i++) {
-            initializationButton(amount.get(i));
+        for (String s : amount) {
+            initializationButton(s);
         }
 
         rowsInLine.add(rowInLine);

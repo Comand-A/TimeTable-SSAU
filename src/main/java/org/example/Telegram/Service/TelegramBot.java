@@ -1,8 +1,8 @@
 package org.example.Telegram.Service;
 
 import org.example.DirectionSSAU.IIK.IIKCourse;
-import org.example.DirectionSSAU.IIK.IIKDirectionOfGroupFirstCourse;
-import org.example.DirectionSSAU.IIK.IIKFirstCourseId;
+import org.example.DirectionSSAU.IIK.IIKDirectionOfGroups.*;
+import org.example.DirectionSSAU.IIK.IIKCorseID.IIKFirstCourseID;
 import org.example.Parser.Day;
 import org.example.Parser.Parser;
 import org.example.Telegram.KeyBoard.InLineKeyboardButtonOfCourses;
@@ -88,11 +88,11 @@ public class TelegramBot extends TelegramLongPollingBot {
 
             if (checkAvailabilityCoursesOfDirection(callbackData))
                 executeEditMessageText(chatId, messageId, callbackData, getDirectionOfCourses(callbackData), "Вы выбрали Курс ");
-            else if (checkAvailabilityDirection(callbackData))
-                executeEditMessageText(chatId, messageId, callbackData, getGroupOfDirection(callbackData), "Вы выбрали направление ");
+            else if (checkAvailabilityDirection(callbackData, directionOfGroup.get(0)))
+                executeEditMessageText(chatId, messageId, callbackData, getGroupOfDirection(callbackData, directionOfGroup.get(0)), "Вы выбрали направление ");
             else {
                 directionOfGroup.add(callbackData);
-                executeEditMessageText(chatId, messageId, callbackData, null, "Вы выбрали группу № ");
+                executeEditMessageText(chatId, messageId, callbackData, null, "Вы выбрали группу №");
             }
         }
     }
@@ -119,9 +119,9 @@ public class TelegramBot extends TelegramLongPollingBot {
         sendMessage(messageText);
         if (checkAvailabilityCoursesOfDirection(nameDirection)) {
             InlineKeyboardButtonUser lineKeyboard = new InlineKeyboardButtonUser();
-            sendMessage(lineKeyboard.choiceOfDirectionIIK(chatId,volatileData));
+            sendMessage(lineKeyboard.choiceOfDirectionIIK(chatId, volatileData));
             directionOfGroup = new ArrayList<>(Collections.singletonList(nameDirection));
-        } else if (checkAvailabilityDirection(nameDirection)) {
+        } else if (checkAvailabilityDirection(nameDirection, directionOfGroup.get(0))) {
             InlineKeyboardButtonUser lineKeyboard = new InlineKeyboardButtonUser();
             sendMessage(lineKeyboard.setOfGroupNumber(chatId, volatileData));
             directionOfGroup.add(nameDirection);
@@ -132,22 +132,51 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     private void getIdDirectionUser(ArrayList<String> directionOfGroup) {
-        IIKFirstCourseId iikFirstCourseId = new IIKFirstCourseId(directionOfGroup);
+        IIKFirstCourseID iikFirstCourseId = new IIKFirstCourseID(directionOfGroup);
         idDirection = iikFirstCourseId.getIdDirectionUser();
     }
+
     private List<String> getDirectionOfCourses(String directionOfGroup) {
         IIKCourse iikCourse = new IIKCourse(directionOfGroup);
         return iikCourse.getDirectionUser();
     }
 
-    private List<String> getGroupOfDirection(String direction) {
-        IIKDirectionOfGroupFirstCourse iikFirstCourse = new IIKDirectionOfGroupFirstCourse(direction);
-        return iikFirstCourse.getGroupUser();
+    private List<String> getGroupOfDirection(String direction, String course) {
+        if (course.equals("1")) {
+            IIKDirectionOfGroupFirstCourse iikFirstCourse = new IIKDirectionOfGroupFirstCourse(direction);
+            return iikFirstCourse.getGroupUser();
+        } else if (course.equals("2")) {
+            IIKDirectionOfGroupSecondCourse iikFirstCourse = new IIKDirectionOfGroupSecondCourse(direction);
+            return iikFirstCourse.getGroupUser();
+        } else if (course.equals("3")) {
+            IIKDirectionOfGroupThirdCourse iikFirstCourse = new IIKDirectionOfGroupThirdCourse(direction);
+            return iikFirstCourse.getGroupUser();
+        } else if (course.equals("4")) {
+            IIKDirectionOfGroupFourthCourse iikFirstCourse = new IIKDirectionOfGroupFourthCourse(direction);
+            return iikFirstCourse.getGroupUser();
+        } else {
+            IIKDirectionOfGroupFifthCourse iikFirstCourse = new IIKDirectionOfGroupFifthCourse(direction);
+            return iikFirstCourse.getGroupUser();
+        }
     }
 
-    private boolean checkAvailabilityDirection(String direction) {
-        IIKDirectionOfGroupFirstCourse iikFirstCourse = new IIKDirectionOfGroupFirstCourse(direction);
-        return iikFirstCourse.checkAvailabilityDirection();
+    private boolean checkAvailabilityDirection(String direction, String course) {
+        if (course.equals("1")) {
+            IIKDirectionOfGroupFirstCourse iikFirstCourse = new IIKDirectionOfGroupFirstCourse(direction);
+            return iikFirstCourse.checkAvailabilityDirection();
+        } else if (course.equals("2")) {
+            IIKDirectionOfGroupSecondCourse iikFirstCourse = new IIKDirectionOfGroupSecondCourse(direction);
+            return iikFirstCourse.checkAvailabilityDirection();
+        } else if (course.equals("3")) {
+            IIKDirectionOfGroupThirdCourse iikFirstCourse = new IIKDirectionOfGroupThirdCourse(direction);
+            return iikFirstCourse.checkAvailabilityDirection();
+        } else if (course.equals("4")) {
+            IIKDirectionOfGroupFourthCourse iikFirstCourse = new IIKDirectionOfGroupFourthCourse(direction);
+            return iikFirstCourse.checkAvailabilityDirection();
+        } else {
+            IIKDirectionOfGroupFifthCourse iikFirstCourse = new IIKDirectionOfGroupFifthCourse(direction);
+            return iikFirstCourse.checkAvailabilityDirection();
+        }
     }
 
     private void callParser(long chatId, boolean criterion) {

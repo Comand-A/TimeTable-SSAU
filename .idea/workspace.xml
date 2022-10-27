@@ -5,14 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a02f544-0b08-43d9-9c6c-c754134f900e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCourse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InLineKeyboardButtonOfCourses.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKFifthCourseID.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKFourthCourseID.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKSecondCourseID.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKThirdCourseID.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupFifthCourse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupFourthCourse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupSecondCourse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupThirdCourse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIKDirectionOfGroupFirstCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroupFirstCourse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIKFirstCourseId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKFirstCourseId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroupFirstCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupFirstCourse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKFirstCourseId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKFirstCourseID.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Parser/Para.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Parser/Para.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Parser/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InlineKeyboardButtonUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InlineKeyboardButtonUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Model/Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Model/DirectionIIK.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Service/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Service/TelegramBot.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -176,6 +181,7 @@
       <workItem from="1666423863551" duration="3818000" />
       <workItem from="1666585189908" duration="1386000" />
       <workItem from="1666685901830" duration="4090000" />
+      <workItem from="1666872968935" duration="6630000" />
     </task>
     <servers />
   </component>
@@ -205,9 +211,9 @@
           <option name="timeStamp" value="13" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/Telegram/Service/TelegramBot.java</url>
-          <line>88</line>
-          <option name="timeStamp" value="16" />
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Parser/Parser.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

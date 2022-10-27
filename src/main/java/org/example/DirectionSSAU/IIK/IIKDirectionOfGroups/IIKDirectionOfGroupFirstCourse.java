@@ -1,4 +1,4 @@
-package org.example.DirectionSSAU.IIK;
+package org.example.DirectionSSAU.IIK.IIKDirectionOfGroups;
 
 import org.example.Telegram.Model.DirectionIIK;
 import org.example.Telegram.Model.Emoji;

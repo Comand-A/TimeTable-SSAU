@@ -19,7 +19,7 @@ public class Para {
 
     @Override
     public String toString() {
-        return String.format(timePara.get(numberPara) + "%s\nМесто: %s\nУчитель: %s\nГруппа: %s\n\n",
+        return String.format(timePara.get(numberPara) + "%s\nМесто: %s\nПреподаватель: %s\nГруппа: %s\n\n",
                 this.para, this.place, this.teacher, this.group);
     }
 }

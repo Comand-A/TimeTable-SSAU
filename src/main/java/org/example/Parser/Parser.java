@@ -98,7 +98,7 @@ public class Parser {
         fullWeekDays = new ArrayList<>();
         for (Element day : allDay) {
             if (!day.select(cssQueryList.get(0)).text().equals("")) {
-                for (int j = 2; j < 5; j++) {
+                for (int j = 2; j < 6; j++) {
                     if (!day.select(cssQueryList.get(1) + cssQueryList.get(j)).text().equals("")) {
                         fullWeekDays.add(day.select(cssQueryList.get(1) + cssQueryList.get(j)).text());
                     }

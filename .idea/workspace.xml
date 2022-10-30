@@ -5,20 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a02f544-0b08-43d9-9c6c-c754134f900e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKFifthCourseID.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKFourthCourseID.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKSecondCourseID.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKThirdCourseID.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupFifthCourse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupFourthCourse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupSecondCourse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupThirdCourse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroupFirstCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupFirstCourse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKFirstCourseId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKFirstCourseID.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Parser/Para.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Parser/Para.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Parser/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Service/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Service/TelegramBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKFifthCourseID.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKFirstCourseID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKFirstCourseID.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKFourthCourseID.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKSecondCourseID.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCorseID/IIKThirdCourseID.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKCourse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupFirstCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupFirstCourse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupFourthCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupFourthCourse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupSecondCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupSecondCourse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupThirdCourse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/DirectionSSAU/IIK/IIKDirectionOfGroups/IIKDirectionOfGroupThirdCourse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InlineKeyboardButtonUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InlineKeyboardButtonUser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +179,8 @@
       <workItem from="1666423863551" duration="3818000" />
       <workItem from="1666585189908" duration="1386000" />
       <workItem from="1666685901830" duration="4090000" />
-      <workItem from="1666872968935" duration="6630000" />
+      <workItem from="1666872968935" duration="7407000" />
+      <workItem from="1667139312933" duration="795000" />
     </task>
     <servers />
   </component>

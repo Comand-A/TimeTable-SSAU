@@ -30,6 +30,10 @@ public class IIKFirstCourseID {
         put(DirectionIIK.BIO_TECH.get() + "6102", "804435212");
         put(DirectionIIK.PMF.get() + "6101", "755922274");
         put(DirectionIIK.PMF.get() + "6102", "755922277");
+        put(DirectionIIK.IBAS.get() + "6111", "531030140");
+        put(DirectionIIK.IBAS.get() + "6112", "531872796");
+        put(DirectionIIK.IBAS.get() + "6113", "755923076");
+        put(DirectionIIK.IBAS.get() + "6114", "762578062");
 
         put(DirectionIIK.PMI.get() + "6201", "799359428");
         put(DirectionIIK.PMI.get() + "6202", "799359452");
@@ -52,6 +56,10 @@ public class IIKFirstCourseID {
         put(DirectionIIK.PMF.get() + "6202", "799360928");
         put(DirectionIIK.LASER_TECH.get() + "6263", "531013107");
         put(DirectionIIK.CONSTRUCTION_AND_TECH_ELECTRONICS.get() + "6265", "531013093");
+        put(DirectionIIK.IBAS.get() + "6211", "531030141");
+        put(DirectionIIK.IBAS.get() + "6212", "531873889");
+        put(DirectionIIK.IBAS.get() + "6213", "799363884");
+        put(DirectionIIK.IBAS.get() + "6214", "799363962");
 
         put(DirectionIIK.PMI.get() + "6307", "531873550");
         put(DirectionIIK.PMI.get() + "6308", "531873790");
@@ -68,6 +76,8 @@ public class IIKFirstCourseID {
         put(DirectionIIK.PMF.get() + "6306", "531874219");
         put(DirectionIIK.LASER_TECH.get() + "6363", "531013109");
         put(DirectionIIK.CONSTRUCTION_AND_TECH_ELECTRONICS.get() + "6365", "531013095");
+        put(DirectionIIK.IBAS.get() + "6311", "531030142");
+        put(DirectionIIK.IBAS.get() + "6412", "531873987");
 
         put(DirectionIIK.PMI.get() + "6407", "531873795");
         put(DirectionIIK.PMI.get() + "6408", "531873797");
@@ -83,6 +93,8 @@ public class IIKFirstCourseID {
         put(DirectionIIK.PMF.get() + "6406", "799360924");
         put(DirectionIIK.LASER_TECH.get() + "6463", "531013110");
         put(DirectionIIK.CONSTRUCTION_AND_TECH_ELECTRONICS.get() + "6465", "531013096");
+        put(DirectionIIK.IBAS.get() + "6411", "531030143");
+        put(DirectionIIK.IBAS.get() + "6412", "531873998");
 
         put(DirectionIIK.IBAS.get() + "6511", "531874010");
         put(DirectionIIK.IBAS.get() + "6512", "531874011");

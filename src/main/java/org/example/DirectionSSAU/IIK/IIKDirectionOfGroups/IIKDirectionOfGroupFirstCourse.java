@@ -10,6 +10,7 @@ public class IIKDirectionOfGroupFirstCourse {
         put(DirectionIIK.PMI.get(), new ArrayList<>(Arrays.asList("6101", "6102", "6103", "6104", "6105", "6106")));
         put(DirectionIIK.FIIT.get(), new ArrayList<>(Arrays.asList("6101", "6102", "6103", "6104")));
         put(DirectionIIK.IVT.get(), new ArrayList<>(Arrays.asList("6101", "6102", "6103", "6104", "6105", "6106")));
+        put(DirectionIIK.IBAS.get(), new ArrayList<>(Arrays.asList("6111", "6112", "6113", "6114")));
         put(DirectionIIK.RADIO_TECH.get(), new ArrayList<>(Collections.singletonList("6101")));
         put(DirectionIIK.ELECTRONICS.get(), new ArrayList<>(Collections.singletonList("6101")));
         put(DirectionIIK.BIO_TECH.get(), new ArrayList<>(Arrays.asList("6101", "6102")));

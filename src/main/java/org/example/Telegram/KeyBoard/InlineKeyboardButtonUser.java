@@ -47,7 +47,7 @@ public class InlineKeyboardButtonUser {
 
         int i = 0;
         for (String s : directionOfCourse) {
-            if (s.length() <= 12 && i < 3) {
+            if (s.length() <= 11 && i < 3) {
                 initializationButton(s);
                 i++;
             } else {

@@ -14,6 +14,7 @@ public class RealDate {
     private Document page;
     private Element table;
     private String realDate;
+    private int dayOfWeek;
 
     private void getPage() throws IOException {
 
@@ -33,7 +34,7 @@ public class RealDate {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        long numberOfWeek = (((realDateInDate.getTime() - begin.getTime()) / millisecondsInOneWeek) + 1);
+        long numberOfWeek = (((realDateInDate.getTime() - begin.getTime()) / millisecondsInOneWeek) + 1)-23;
 
         return String.valueOf(numberOfWeek + number);
     }

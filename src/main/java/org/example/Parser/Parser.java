@@ -120,11 +120,6 @@ public class Parser {
                 groups.add("");
             }
         }
-        if ((fullWeekDays.get(5).equals(Emoji.CROSS.get())) && (fullWeekDays.get(11).equals(Emoji.CROSS.get()))
-                && (fullWeekDays.get(17).equals(Emoji.CROSS.get())) && (fullWeekDays.get(23).equals(Emoji.CROSS.get()))
-                && (fullWeekDays.get(29).equals(Emoji.CROSS.get()))) {
-            dates.set(5, "");
-        }
         for (int i = 0; i < 6; i++) {
             ArrayList<String> pairs = new ArrayList<>();
             pairs.add(String.valueOf(new Para(fullWeekDays.get(i), schedulePlace.get(i), teachers.get(i), groups.get(i), 0)));

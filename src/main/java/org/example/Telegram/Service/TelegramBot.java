@@ -6,11 +6,13 @@ import org.example.DirectionSSAU.IIK.IIKCorseID.IIKFirstCourseID;
 import org.example.Parser.Day;
 import org.example.Parser.Parser;
 import org.example.Telegram.KeyBoard.InLineKeyboardButtonOfCourses;
+import org.example.Telegram.KeyBoard.InLineKeyboardWeekday;
 import org.example.Telegram.KeyBoard.InlineKeyboardButtonUser;
 import org.example.Telegram.KeyBoard.ReplyKeyboardUser;
 import org.example.Telegram.Model.Emoji;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -20,9 +22,12 @@ import java.util.*;
 
 public class TelegramBot extends TelegramLongPollingBot {
     private ArrayList<String> directionOfGroup;
-    private long numberOfWeek;
+    private long numberOfWeek = 0;
     private List<Day> timeTable;
     private String idDirection;
+
+    private int dayNumber=0;
+    private boolean dayNumberTrue = false;
 
     public String getBotUsername() {
         return "@TimeTableSSAUBot";
@@ -39,7 +44,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             String messageText = update.getMessage().getText();
             if (tryParseInt(messageText, 915989239) != 915989239) {
                 numberOfWeek = Integer.parseInt(update.getMessage().getText());
-                callParser(chatId, true);
+                callParser(chatId, true, chatId);
             } else {
                 switch (messageText) {
                     case "/start":
@@ -57,15 +62,15 @@ public class TelegramBot extends TelegramLongPollingBot {
                         break;
                     case "⏪Предыдущая":
                         numberOfWeek = -1;
-                        callParser(chatId, false);
+                        callParser(chatId, false, chatId);
                         break;
                     case "Текущая":
                         numberOfWeek = 0;
-                        callParser(chatId, false);
+                        callParser(chatId, false, chatId);
                         break;
                     case "Следующая⏩":
                         numberOfWeek = 1;
-                        callParser(chatId, false);
+                        callParser(chatId, false, chatId);
                         break;
                     case "Своя неделя":
                         SendMessage message = new SendMessage();
@@ -90,10 +95,41 @@ public class TelegramBot extends TelegramLongPollingBot {
                 executeEditMessageText(chatId, messageId, callbackData, getDirectionOfCourses(callbackData), "Вы выбрали Курс ");
             else if (checkAvailabilityDirection(callbackData, directionOfGroup.get(0)))
                 executeEditMessageText(chatId, messageId, callbackData, getGroupOfDirection(callbackData, directionOfGroup.get(0)), "Вы выбрали направление ");
+            else if (callbackData.equals("пн")) {
+                dayNumber = 0;
+                editMessage(chatId,  messageId);
+            } else if (callbackData.equals("вт")) {
+                dayNumber = 1;
+                editMessage(chatId,  messageId);
+            } else if (callbackData.equals("ср")) {
+                dayNumber = 2;
+                editMessage(chatId,  messageId);
+            } else if (callbackData.equals("чт")) {
+                dayNumber = 3;
+                editMessage(chatId,  messageId);
+            } else if (callbackData.equals("пт")) {
+                dayNumber = 4;
+                editMessage(chatId,  messageId);
+            } else if (callbackData.equals("сб")) {
+                dayNumber = 5;
+                editMessage(chatId,  messageId);
+            } else if (callbackData.equals("след")) {
+                numberOfWeek += 1;
+                Parser parser = new Parser(idDirection, numberOfWeek,false);
+                timeTable = parser.Print();
+                editMessage(chatId,  messageId);
+            } else if (callbackData.equals("пред")) {
+                Parser parser = new Parser(idDirection, numberOfWeek, false);
+                timeTable = parser.Print();
+                if (numberOfWeek>1)
+                    numberOfWeek -= 1;
+                editMessage(chatId,  messageId);
+            }
             else {
                 directionOfGroup.add(callbackData);
                 executeEditMessageText(chatId, messageId, callbackData, null, "Вы выбрали группу №");
             }
+
         }
     }
 
@@ -179,26 +215,39 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private void callParser(long chatId, boolean criterion) {
+    private void callParser(long chatId, boolean criterion, long messageId) {
         Parser parser = new Parser(idDirection, numberOfWeek, criterion);
         timeTable = parser.Print();
         SendMessage message = new SendMessage();
-        for (Day s : timeTable) {
-            message.setChatId(chatId);
-            message.setText(String.valueOf(s));
-            sendMessage(message);
+        InLineKeyboardWeekday inLineKeyboardButtonOfCourses = new InLineKeyboardWeekday();
+        message = inLineKeyboardButtonOfCourses.choiceOfWeekday(chatId, String.valueOf(timeTable.get(dayNumber)));
+        sendMessage(message);
+    }
+    private void editMessage(long chatId, long messageId){
+        if (chatId != messageId) {
+            DeleteMessage deleteMessage = new DeleteMessage();
+            deleteMessage.setChatId(chatId);
+            deleteMessage.setMessageId((int) messageId);
+            try {
+                execute(deleteMessage);
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
         }
+        SendMessage message = new SendMessage();
+        InLineKeyboardWeekday inLineKeyboardButtonOfCourses = new InLineKeyboardWeekday();
+        if (String.valueOf(timeTable.get(dayNumber)).trim().equals("")){
+            dayNumber=0;
+        }
+        message = inLineKeyboardButtonOfCourses.choiceOfWeekday(chatId, String.valueOf(timeTable.get(dayNumber)));
+        dayNumber=0;
+        sendMessage(message);
     }
 
     private void keyboardChooseWeek(long chatId) {
+        numberOfWeek = 0;
+        callParser(chatId, false, chatId);
         SendMessage message = new SendMessage();
-        message.setChatId(chatId);
-        message.setText("Выберите учебную неделю");
-
-        ReplyKeyboardUser replyKeyboard = new ReplyKeyboardUser();
-
-        message.setReplyMarkup(replyKeyboard.keyboardChooseWeek());
-        sendMessage(message);
     }
 
     private void choiceOfCourse(long chatId) {
@@ -246,6 +295,4 @@ public class TelegramBot extends TelegramLongPollingBot {
         sendMessage(message);
 
     }
-
-
 }

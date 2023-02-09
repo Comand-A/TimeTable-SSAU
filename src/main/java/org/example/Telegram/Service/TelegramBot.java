@@ -234,7 +234,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 throw new RuntimeException(e);
             }
         }
-        SendMessage message = new SendMessage();
+        SendMessage message;
         InLineKeyboardWeekday inLineKeyboardButtonOfCourses = new InLineKeyboardWeekday();
         if (String.valueOf(timeTable.get(dayNumber)).trim().equals("")){
             dayNumber=0;

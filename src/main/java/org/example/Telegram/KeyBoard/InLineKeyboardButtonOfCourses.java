@@ -37,30 +37,31 @@ public class InLineKeyboardButtonOfCourses {
         initializationMessage(chatId, "Выберите ваш курс");
 
         initializationInlineKeyboard();
-        button = new InlineKeyboardButton();
-        button.setText("1");
-        button.setCallbackData("1");
-        rowInLine.add(button);
-
-        button = new InlineKeyboardButton();
-        button.setText("2");
-        button.setCallbackData("2");
-        rowInLine.add(button);
-
-        button = new InlineKeyboardButton();
-        button.setText("3");
-        button.setCallbackData("3");
-        rowInLine.add(button);
-
-        button = new InlineKeyboardButton();
-        button.setText("4");
-        button.setCallbackData("4");
-        rowInLine.add(button);
-
-        button = new InlineKeyboardButton();
-        button.setText("5");
-        button.setCallbackData("5");
-        rowInLine.add(button);
+        for (int i = 1; i<6;i++ ) {
+            button = new InlineKeyboardButton();
+            button.setText(String.valueOf(i));
+            button.setCallbackData(String.valueOf(i));
+            rowInLine.add(button);
+        }
+//        button = new InlineKeyboardButton();
+//        button.setText("2");
+//        button.setCallbackData("2");
+//        rowInLine.add(button);
+//
+//        button = new InlineKeyboardButton();
+//        button.setText("3");
+//        button.setCallbackData("3");
+//        rowInLine.add(button);
+//
+//        button = new InlineKeyboardButton();
+//        button.setText("4");
+//        button.setCallbackData("4");
+//        rowInLine.add(button);
+//
+//        button = new InlineKeyboardButton();
+//        button.setText("5");
+//        button.setCallbackData("5");
+//        rowInLine.add(button);
 
         rowsInLine.add(rowInLine);
 

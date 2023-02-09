@@ -47,27 +47,27 @@ public class ReplyKeyboardUser {
         return keyboardMarkup;
     }
 
-    public ReplyKeyboard keyboardChooseWeek() {
-        keyboardMarkup = new ReplyKeyboardMarkup();
-        keyboardMarkup.setResizeKeyboard(true);
-        keyboardRows = new ArrayList<>();
-
-        rowOne = new KeyboardRow();
-
-        rowOne.add(Emoji.PAST_WEEK.get() + NameButton.PAST_WEEK.get());
-        rowOne.add(NameButton.THIS_WEEK.get());
-        rowOne.add(NameButton.NEXT_WEEK.get() + Emoji.NEXT_WEEK.get());
-        keyboardRows.add(rowOne);
-
-        rowTwo = new KeyboardRow();
-        rowTwo.add(NameButton.USER_WEEK.get());
-        rowTwo.add(Emoji.BACK.get() + NameButton.BACK.get() + Emoji.BACK.get());
-
-        keyboardRows.add(rowTwo);
-
-        keyboardMarkup.setKeyboard(keyboardRows);
-
-        return keyboardMarkup;
-    }
+//    public ReplyKeyboard keyboardChooseWeek() {
+//        keyboardMarkup = new ReplyKeyboardMarkup();
+//        keyboardMarkup.setResizeKeyboard(true);
+//        keyboardRows = new ArrayList<>();
+//
+//        rowOne = new KeyboardRow();
+//
+//        rowOne.add(Emoji.PAST_WEEK.get() + NameButton.PAST_WEEK.get());
+//        rowOne.add(NameButton.THIS_WEEK.get());
+//        rowOne.add(NameButton.NEXT_WEEK.get() + Emoji.NEXT_WEEK.get());
+//        keyboardRows.add(rowOne);
+//
+//        rowTwo = new KeyboardRow();
+//        rowTwo.add(NameButton.USER_WEEK.get());
+//        rowTwo.add(Emoji.BACK.get() + NameButton.BACK.get() + Emoji.BACK.get());
+//
+//        keyboardRows.add(rowTwo);
+//
+//        keyboardMarkup.setKeyboard(keyboardRows);
+//
+//        return keyboardMarkup;
+//    }
 }
 

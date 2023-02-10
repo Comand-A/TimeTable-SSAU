@@ -34,38 +34,13 @@ public class InLineKeyboardWeekday {
         initializationMessage(chatId, mes);
 
         initializationInlineKeyboard();
+        int i = 0;
         for (String day : weekDay){
-            button = new InlineKeyboardButton();
-            button.setText(day);
-            button.setCallbackData(day);
-            rowInLine.add(button);
+            rowInLine.add(new InlineKeyboardButton());
+            rowInLine.get(i).setText(day);
+            rowInLine.get(i).setCallbackData(day);
+            i++;
         }
-
-
-//        button = new InlineKeyboardButton();
-//        button.setText("вт");
-//        button.setCallbackData("вт");
-//        rowInLine.add(button);
-//
-//        button = new InlineKeyboardButton();
-//        button.setText("ср");
-//        button.setCallbackData("ср");
-//        rowInLine.add(button);
-//
-//        button = new InlineKeyboardButton();
-//        button.setText("чт");
-//        button.setCallbackData("чт");
-//        rowInLine.add(button);
-//
-//        button = new InlineKeyboardButton();
-//        button.setText("пт");
-//        button.setCallbackData("пт");
-//        rowInLine.add(button);
-//
-//        button = new InlineKeyboardButton();
-//        button.setText("сб");
-//        button.setCallbackData("сб");
-//        rowInLine.add(button);
 
         rowsInLine.add(rowInLine);
 

@@ -60,56 +60,6 @@ public class InlineKeyboardButtonUser {
                 rowsInLine.add(rowInLine);
         }
 
-
-//        button = new InlineKeyboardButton();
-//        button.setText(Emoji.CROWN.get() + DirectionIIK.FIIT.get() + Emoji.CROWN.get());
-//        button.setCallbackData(DirectionIIK.FIIT.get());
-//        rowInLine.add(button);
-//
-//
-//        button = new InlineKeyboardButton();
-//        button.setText(DirectionIIK.PMF.get());
-//        button.setCallbackData(DirectionIIK.PMF.get());
-//        rowInLine.add(button);
-//
-//        button = new InlineKeyboardButton();
-//        button.setText(DirectionIIK.PMI.get());
-//        button.setCallbackData(DirectionIIK.PMI.get());
-//        rowInLine.add(button);
-//
-//        rowsInLine.add(rowInLine);
-//
-//        rowInLine = new ArrayList<>();
-//
-//        button = new InlineKeyboardButton();
-//        button.setText(DirectionIIK.IVT.get());
-//        button.setCallbackData(DirectionIIK.IVT.get());
-//        rowInLine.add(button);
-//
-//        button = new InlineKeyboardButton();
-//        button.setText(DirectionIIK.RADIO_TECH.get());
-//        button.setCallbackData(DirectionIIK.RADIO_TECH.get());
-//        rowInLine.add(button);
-//
-//        rowsInLine.add(rowInLine);
-//
-//        rowInLine = new ArrayList<>();
-//
-//        button = new InlineKeyboardButton();
-//        button.setText(DirectionIIK.ELECTRONICS.get());
-//        button.setCallbackData(DirectionIIK.ELECTRONICS.get());
-//        rowInLine.add(button);
-//
-//        rowsInLine.add(rowInLine);
-//
-//        rowInLine = new ArrayList<>();
-//
-//        button = new InlineKeyboardButton();
-//        button.setText(DirectionIIK.BIO_TECH.get());
-//        button.setCallbackData(DirectionIIK.BIO_TECH.get());
-//        rowInLine.add(button);
-
-
         markupInLine.setKeyboard(rowsInLine);
         message.setReplyMarkup(markupInLine);
 

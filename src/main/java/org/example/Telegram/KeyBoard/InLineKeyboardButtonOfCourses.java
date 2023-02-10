@@ -38,10 +38,9 @@ public class InLineKeyboardButtonOfCourses {
 
         initializationInlineKeyboard();
         for (int i = 1; i<6;i++ ) {
-            button = new InlineKeyboardButton();
-            button.setText(String.valueOf(i));
-            button.setCallbackData(String.valueOf(i));
-            rowInLine.add(button);
+            rowInLine.add(new InlineKeyboardButton());
+            rowInLine.get(i-1).setText(String.valueOf(i));
+            rowInLine.get(i-1).setCallbackData(String.valueOf(i));
         }
 //        button = new InlineKeyboardButton();
 //        button.setText("2");

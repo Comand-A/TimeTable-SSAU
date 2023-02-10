@@ -119,10 +119,10 @@ public class TelegramBot extends TelegramLongPollingBot {
                 timeTable = parser.Print();
                 editMessage(chatId,  messageId);
             } else if (callbackData.equals("пред")) {
+                if (numberOfWeek>=1)
+                    numberOfWeek -= 1;
                 Parser parser = new Parser(idDirection, numberOfWeek, false);
                 timeTable = parser.Print();
-                if (numberOfWeek>1)
-                    numberOfWeek -= 1;
                 editMessage(chatId,  messageId);
             }
             else {

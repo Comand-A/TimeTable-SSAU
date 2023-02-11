@@ -12,7 +12,6 @@ public class InLineKeyboardButtonOfCourses {
     private InlineKeyboardMarkup markupInLine;
     private List<List<InlineKeyboardButton>> rowsInLine;
     private List<InlineKeyboardButton> rowInLine;
-    private InlineKeyboardButton button;
 
     private void initializationMessage(long chatId, String textSend) {
         message = new SendMessage();
@@ -26,13 +25,6 @@ public class InLineKeyboardButtonOfCourses {
         rowInLine = new ArrayList<>();
     }
 
-//    private void initializationButton(String value) {
-//        button = new InlineKeyboardButton();
-//        button.setText(value);
-//        button.setCallbackData(value);
-//        rowInLine.add(button);
-//    }
-
     public SendMessage choiceOfCourse(long chatId) {
         initializationMessage(chatId, "Выберите ваш курс");
 
@@ -42,25 +34,6 @@ public class InLineKeyboardButtonOfCourses {
             rowInLine.get(i-1).setText(String.valueOf(i));
             rowInLine.get(i-1).setCallbackData(String.valueOf(i));
         }
-//        button = new InlineKeyboardButton();
-//        button.setText("2");
-//        button.setCallbackData("2");
-//        rowInLine.add(button);
-//
-//        button = new InlineKeyboardButton();
-//        button.setText("3");
-//        button.setCallbackData("3");
-//        rowInLine.add(button);
-//
-//        button = new InlineKeyboardButton();
-//        button.setText("4");
-//        button.setCallbackData("4");
-//        rowInLine.add(button);
-//
-//        button = new InlineKeyboardButton();
-//        button.setText("5");
-//        button.setCallbackData("5");
-//        rowInLine.add(button);
 
         rowsInLine.add(rowInLine);
 

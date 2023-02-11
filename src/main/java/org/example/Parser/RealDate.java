@@ -14,7 +14,6 @@ public class RealDate {
     private Document page;
     private Element table;
     private String realDate;
-    private int dayOfWeek;
 
     private void getPage() throws IOException {
 

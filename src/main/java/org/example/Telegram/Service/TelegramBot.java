@@ -27,7 +27,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     private String idDirection;
 
     private int dayNumber=0;
-    private boolean dayNumberTrue = false;
 
     public String getBotUsername() {
         return "@TimeTableSSAUBot";

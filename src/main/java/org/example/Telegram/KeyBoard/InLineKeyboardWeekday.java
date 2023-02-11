@@ -13,8 +13,7 @@ public class InLineKeyboardWeekday {
     private SendMessage message;
     private InlineKeyboardMarkup markupInLine;
     private List<List<InlineKeyboardButton>> rowsInLine;
-    private List<InlineKeyboardButton> rowInLine,rowInLine2;
-    private InlineKeyboardButton button;
+    private List<InlineKeyboardButton> rowInLine;
 
     private void initializationMessage(long chatId, String textSend) {
         message = new SendMessage();
@@ -26,7 +25,6 @@ public class InLineKeyboardWeekday {
         markupInLine = new InlineKeyboardMarkup();
         rowsInLine = new ArrayList<>();
         rowInLine = new ArrayList<>();
-        rowInLine2 = new ArrayList<>();
     }
 
 
@@ -34,27 +32,24 @@ public class InLineKeyboardWeekday {
         initializationMessage(chatId, mes);
 
         initializationInlineKeyboard();
-        int i = 0;
         for (String day : weekDay){
             rowInLine.add(new InlineKeyboardButton());
-            rowInLine.get(i).setText(day);
-            rowInLine.get(i).setCallbackData(day);
-            i++;
+            rowInLine.get(rowInLine.size()-1).setText(day);
+            rowInLine.get(rowInLine.size()-1).setCallbackData(day);
         }
 
         rowsInLine.add(rowInLine);
+        rowInLine = new ArrayList<>();
 
-        button = new InlineKeyboardButton();
-        button.setText("Предыдущая");
-        button.setCallbackData("пред");
-        rowInLine2.add(button);
+        rowInLine.add(new InlineKeyboardButton());
+        rowInLine.get(0).setText("Предыдущая");
+        rowInLine.get(0).setCallbackData("пред");
 
-        button = new InlineKeyboardButton();
-        button.setText("Следующая");
-        button.setCallbackData("след");
-        rowInLine2.add(button);
+        rowInLine.add(new InlineKeyboardButton());
+        rowInLine.get(1).setText("Следующая");
+        rowInLine.get(1).setCallbackData("след");
 
-        rowsInLine.add(rowInLine2);
+        rowsInLine.add(rowInLine);
 
         markupInLine.setKeyboard(rowsInLine);
         message.setReplyMarkup(markupInLine);

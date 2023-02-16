@@ -6,19 +6,19 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import java.util.ArrayList;
 import java.util.List;
 
-public class InLineKeyboardButtonOfCourses {
+public class InLineKeyboardGroup {
     private InlineKeyboardMarkup markupInLine;
     private List<List<InlineKeyboardButton>> rowsInLine;
     private List<InlineKeyboardButton> rowInLine;
-    public InlineKeyboardMarkup choiceOfCourse() {
 
+    public InlineKeyboardMarkup directionGroups(List<String> returnList) {
         markupInLine = new InlineKeyboardMarkup();
         rowsInLine = new ArrayList<>();
         rowInLine = new ArrayList<>();
-        for (int i = 1; i<6;i++ ) {
+        for (int i = 0; i < returnList.size(); i++) {
             rowInLine.add(new InlineKeyboardButton());
-            rowInLine.get(i-1).setText(String.valueOf(i));
-            rowInLine.get(i-1).setCallbackData(String.valueOf(i));
+            rowInLine.get(i).setText(returnList.get(i));
+            rowInLine.get(i).setCallbackData(returnList.get(i));
         }
 
         rowsInLine.add(rowInLine);

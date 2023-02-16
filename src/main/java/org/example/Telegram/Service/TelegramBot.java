@@ -1,32 +1,34 @@
 package org.example.Telegram.Service;
 
-import org.example.DirectionSSAU.IIK.IIKCourse;
+import org.example.DirectionSSAU.IIK.IIKCorseID.IIKCoursesID;
 import org.example.DirectionSSAU.IIK.IIKDirectionOfGroups.*;
-import org.example.DirectionSSAU.IIK.IIKCorseID.IIKFirstCourseID;
 import org.example.Parser.Day;
 import org.example.Parser.Parser;
-import org.example.Telegram.KeyBoard.InLineKeyboardButtonOfCourses;
-import org.example.Telegram.KeyBoard.InLineKeyboardWeekday;
-import org.example.Telegram.KeyBoard.InlineKeyboardButtonUser;
-import org.example.Telegram.KeyBoard.ReplyKeyboardUser;
+import org.example.Parser.RealDate;
+import org.example.Telegram.KeyBoard.*;
 import org.example.Telegram.Model.Emoji;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TelegramBot extends TelegramLongPollingBot {
     private ArrayList<String> directionOfGroup;
-    private long numberOfWeek = 0;
+    private long numberOfWeek = 1;
     private List<Day> timeTable;
-    private String idDirection;
+    private String idDirection, course;
+    private boolean courseSelection = false;
+    private boolean directionSelection = false;
+    private boolean groupSelection = false;
 
-    private int dayNumber=0;
 
     public String getBotUsername() {
         return "@TimeTableSSAUBot";
@@ -41,218 +43,173 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             long chatId = update.getMessage().getChatId();
             String messageText = update.getMessage().getText();
-            if (tryParseInt(messageText, 915989239) != 915989239) {
-                numberOfWeek = Integer.parseInt(update.getMessage().getText());
-                callParser(chatId, true, chatId);
-            } else {
-                switch (messageText) {
-                    case "/start":
-                        keyboardStart(chatId, Emoji.WELCOME.get());
-                        keyboardStart(chatId, "Привет, " + update.getMessage().getChat().getFirstName() + ", рад тебя видеть");
-                        break;
-                    case "↩Назад↩":
-                        keyboardStart(chatId, "Вернулись...");
-                        break;
-                    case "\uD83D\uDE80К расписанию\uD83D\uDE80":
-                        choiceOfCourse(chatId);
-                        break;
-                    case "\uD83D\uDC68\u200D\uD83D\uDCBBАвторы\uD83D\uDC68\u200D\uD83D\uDCBB":
-                        keyboardAuthorsProject(chatId);
-                        break;
-                    case "⏪Предыдущая":
-                        numberOfWeek = -1;
-                        callParser(chatId, false, chatId);
-                        break;
-                    case "Текущая":
-                        numberOfWeek = 0;
-                        callParser(chatId, false, chatId);
-                        break;
-                    case "Следующая⏩":
-                        numberOfWeek = 1;
-                        callParser(chatId, false, chatId);
-                        break;
-                    case "Своя неделя":
-                        SendMessage message = new SendMessage();
-                        message.setChatId(chatId);
-                        message.setText("Введите свою неделю");
-                        sendMessage(message);
-                        break;
-                    case "Посхалка":
-                        keyboardStart(chatId, "Комплимент дня: ты самый - самый");
-                        break;
-                    default:
-                        keyboardStart(chatId, "sorry was not recognized");
-                        break;
-                }
+            switch (messageText) {
+                case "/start":
+                    keyboardStart(chatId, Emoji.WELCOME.get());
+                    keyboardStart(chatId, "Привет, " + update.getMessage().getChat().getFirstName() + ", рад тебя видеть");
+                    break;
+                case "↩Назад↩":
+                    keyboardStart(chatId, "Вернулись...");
+                    break;
+                case "\uD83D\uDE80К расписанию\uD83D\uDE80":
+                    SendMessage message = new SendMessage();
+                    message.setChatId(chatId);
+                    message.setText("Выберите курс");
+                    InLineKeyboardButtonOfCourses keyboard = new InLineKeyboardButtonOfCourses();
+                    sendMessage(message, keyboard.choiceOfCourse());
+                    idDirection = "";
+                    directionSelection = false;
+                    groupSelection = false;
+                    courseSelection = true;
+                    break;
+                case "\uD83D\uDC68\u200D\uD83D\uDCBBАвторы\uD83D\uDC68\u200D\uD83D\uDCBB":
+                    keyboardAuthorsProject(chatId);
+                    break;
+                case "Посхалка":
+                    keyboardStart(chatId, "Комплимент дня: ты самый - самый");
+                    break;
+                default:
+                    keyboardStart(chatId, "sorry was not recognized");
+                    break;
             }
         } else if (update.hasCallbackQuery()) {
             String callbackData = update.getCallbackQuery().getData();
             long messageId = update.getCallbackQuery().getMessage().getMessageId();
             long chatId = update.getCallbackQuery().getMessage().getChatId();
 
-            if (checkAvailabilityCoursesOfDirection(callbackData))
-                executeEditMessageText(chatId, messageId, callbackData, getDirectionOfCourses(callbackData), "Вы выбрали Курс ");
-            else if (checkAvailabilityDirection(callbackData, directionOfGroup.get(0)))
-                executeEditMessageText(chatId, messageId, callbackData, getGroupOfDirection(callbackData, directionOfGroup.get(0)), "Вы выбрали направление ");
-            else if (callbackData.equals("пн")) {
-                dayNumber = 0;
-                editMessage(chatId,  messageId);
+            if (directionSelection) {
+                EditMessageText message = new EditMessageText();
+                message.setChatId(chatId);
+                message.setMessageId((int) messageId);
+                message.setText("Вы выбрали " + callbackData);
+                idDirection += callbackData;
+                sendMessage(message);
+                directionSelection = false;
+                groupSelection = true;
+                SendMessage message1 = new SendMessage();
+                message1.setChatId(chatId);
+                message1.setText("Выберите группу");
+                InLineKeyboardGroup keyboard = new InLineKeyboardGroup();
+                if (course.equals("1")) {
+                    IIKDirectionOfGroupFirstCourse group = new IIKDirectionOfGroupFirstCourse(callbackData);
+                    sendMessage(message1, keyboard.directionGroups(group.returnList()));
+                } else if (course.equals("2")) {
+                    IIKDirectionOfGroupSecondCourse group = new IIKDirectionOfGroupSecondCourse(callbackData);
+                    sendMessage(message1, keyboard.directionGroups(group.returnList()));
+                } else if (course.equals("3")) {
+                    IIKDirectionOfGroupThirdCourse group = new IIKDirectionOfGroupThirdCourse(callbackData);
+                    sendMessage(message1, keyboard.directionGroups(group.returnList()));
+                } else if (course.equals("4")) {
+                    IIKDirectionOfGroupFourthCourse group = new IIKDirectionOfGroupFourthCourse(callbackData);
+                    sendMessage(message1, keyboard.directionGroups(group.returnList()));
+                } else {
+                    IIKDirectionOfGroupFifthCourse group = new IIKDirectionOfGroupFifthCourse(callbackData);
+                    sendMessage(message1, keyboard.directionGroups(group.returnList()));
+                }
+            } else if (courseSelection) {
+                EditMessageText message = new EditMessageText();
+                message.setChatId(chatId);
+                message.setMessageId((int) messageId);
+                message.setText("Вы выбрали " + callbackData + " курс");
+                course = callbackData;
+                courseSelection = false;
+                directionSelection = true;
+                sendMessage(message);
+                SendMessage message1 = new SendMessage();
+                message1.setChatId(chatId);
+                message1.setText("Выберите напрвление");
+                InlineKeyboardButtonUser keyboard = new InlineKeyboardButtonUser();
+                sendMessage(message1, keyboard.directionsCourse(callbackData));
+            } else if (groupSelection) {
+                EditMessageText message = new EditMessageText();
+                message.setChatId(chatId);
+                message.setMessageId((int) messageId);
+                message.setText("Вы выбрали группу №" + callbackData);
+                idDirection += callbackData;
+                groupSelection = false;
+                sendMessage(message);
+                IIKCoursesID courseID = new IIKCoursesID();
+                Parser parser = new Parser(courseID.map.get(idDirection), numberOfWeek, false);
+                RealDate realDate = new RealDate();
+                try {
+                    realDate.getNumberOfWeek(update.getCallbackQuery().getMessage().getDate());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                timeTable = parser.Print();
+                SendMessage message1 = new SendMessage();
+                message1.setChatId(chatId);
+                message1.setText(String.valueOf(timeTable.get(0)));
+                InLineKeyboardWeekday keyboard = new InLineKeyboardWeekday();
+                sendMessage(message1, keyboard.choiceOfWeekday());
+            } else if (callbackData.equals("пн")) {
+                EditMessageText message = new EditMessageText();
+                message.setChatId(chatId);
+                message.setMessageId((int) messageId);
+                message.setText(String.valueOf(timeTable.get(0)));
+                InLineKeyboardWeekday keyboard = new InLineKeyboardWeekday();
+                sendMessage(message, keyboard.choiceOfWeekday());
             } else if (callbackData.equals("вт")) {
-                dayNumber = 1;
-                editMessage(chatId,  messageId);
+                EditMessageText message = new EditMessageText();
+                message.setChatId(chatId);
+                message.setMessageId((int) messageId);
+                message.setText(String.valueOf(timeTable.get(1)));
+                InLineKeyboardWeekday keyboard = new InLineKeyboardWeekday();
+                sendMessage(message, keyboard.choiceOfWeekday());
             } else if (callbackData.equals("ср")) {
-                dayNumber = 2;
-                editMessage(chatId,  messageId);
+                EditMessageText message = new EditMessageText();
+                message.setChatId(chatId);
+                message.setMessageId((int) messageId);
+                message.setText(String.valueOf(timeTable.get(2)));
+                InLineKeyboardWeekday keyboard = new InLineKeyboardWeekday();
+                sendMessage(message, keyboard.choiceOfWeekday());
             } else if (callbackData.equals("чт")) {
-                dayNumber = 3;
-                editMessage(chatId,  messageId);
+                EditMessageText message = new EditMessageText();
+                message.setChatId(chatId);
+                message.setMessageId((int) messageId);
+                message.setText(String.valueOf(timeTable.get(3)));
+                InLineKeyboardWeekday keyboard = new InLineKeyboardWeekday();
+                sendMessage(message, keyboard.choiceOfWeekday());
             } else if (callbackData.equals("пт")) {
-                dayNumber = 4;
-                editMessage(chatId,  messageId);
+                EditMessageText message = new EditMessageText();
+                message.setChatId(chatId);
+                message.setMessageId((int) messageId);
+                message.setText(String.valueOf(timeTable.get(4)));
+                InLineKeyboardWeekday keyboard = new InLineKeyboardWeekday();
+                sendMessage(message, keyboard.choiceOfWeekday());
             } else if (callbackData.equals("сб")) {
-                dayNumber = 5;
-                editMessage(chatId,  messageId);
+                EditMessageText message = new EditMessageText();
+                message.setChatId(chatId);
+                message.setMessageId((int) messageId);
+                message.setText(String.valueOf(timeTable.get(5)));
+                InLineKeyboardWeekday keyboard = new InLineKeyboardWeekday();
+                sendMessage(message, keyboard.choiceOfWeekday());
             } else if (callbackData.equals("след")) {
                 numberOfWeek += 1;
-                Parser parser = new Parser(idDirection, numberOfWeek,false);
+                IIKCoursesID courseID = new IIKCoursesID();
+                Parser parser = new Parser(courseID.map.get(idDirection), numberOfWeek, false);
                 timeTable = parser.Print();
-                editMessage(chatId,  messageId);
+                EditMessageText message = new EditMessageText();
+                message.setChatId(chatId);
+                message.setMessageId((int) messageId);
+                message.setMessageId((int) messageId);
+                message.setText(String.valueOf(timeTable.get(0)));
+                InLineKeyboardWeekday keyboard = new InLineKeyboardWeekday();
+                sendMessage(message, keyboard.choiceOfWeekday());
             } else if (callbackData.equals("пред")) {
-                if (numberOfWeek>=1)
+                if (numberOfWeek > 1)
                     numberOfWeek -= 1;
-                Parser parser = new Parser(idDirection, numberOfWeek, false);
+                IIKCoursesID courseID = new IIKCoursesID();
+                Parser parser = new Parser(courseID.map.get(idDirection), numberOfWeek, false);
                 timeTable = parser.Print();
-                editMessage(chatId,  messageId);
-            }
-            else {
-                directionOfGroup.add(callbackData);
-                executeEditMessageText(chatId, messageId, callbackData, null, "Вы выбрали группу №");
-            }
-
-        }
-    }
-
-    private boolean checkAvailabilityCoursesOfDirection(String course) {
-        IIKCourse iikCourse = new IIKCourse(course);
-        return iikCourse.checkAvailabilityCoursesOfDirection();
-    }
-
-    public int tryParseInt(String value, int defaultVal) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return defaultVal;
-        }
-    }
-
-    private void executeEditMessageText(long chatId, long messageId, String nameDirection, List<String> volatileData, String message) {
-        EditMessageText messageText = new EditMessageText();
-        messageText.setChatId(String.valueOf(chatId));
-        messageText.setText(message + nameDirection);
-        messageText.setMessageId((int) messageId);
-
-        sendMessage(messageText);
-        if (checkAvailabilityCoursesOfDirection(nameDirection)) {
-            InlineKeyboardButtonUser lineKeyboard = new InlineKeyboardButtonUser();
-            sendMessage(lineKeyboard.choiceOfDirectionIIK(chatId, volatileData));
-            directionOfGroup = new ArrayList<>(Collections.singletonList(nameDirection));
-        } else if (checkAvailabilityDirection(nameDirection, directionOfGroup.get(0))) {
-            InlineKeyboardButtonUser lineKeyboard = new InlineKeyboardButtonUser();
-            sendMessage(lineKeyboard.setOfGroupNumber(chatId, volatileData));
-            directionOfGroup.add(nameDirection);
-        } else {
-            getIdDirectionUser(directionOfGroup);
-            keyboardChooseWeek(chatId);
-        }
-    }
-
-    private void getIdDirectionUser(ArrayList<String> directionOfGroup) {
-        IIKFirstCourseID iikFirstCourseId = new IIKFirstCourseID(directionOfGroup);
-        idDirection = iikFirstCourseId.getIdDirectionUser();
-    }
-
-    private List<String> getDirectionOfCourses(String directionOfGroup) {
-        IIKCourse iikCourse = new IIKCourse(directionOfGroup);
-        return iikCourse.getDirectionUser();
-    }
-
-    private List<String> getGroupOfDirection(String direction, String course) {
-        if (course.equals("1")) {
-            IIKDirectionOfGroupFirstCourse iikFirstCourse = new IIKDirectionOfGroupFirstCourse(direction);
-            return iikFirstCourse.getGroupUser();
-        } else if (course.equals("2")) {
-            IIKDirectionOfGroupSecondCourse iikFirstCourse = new IIKDirectionOfGroupSecondCourse(direction);
-            return iikFirstCourse.getGroupUser();
-        } else if (course.equals("3")) {
-            IIKDirectionOfGroupThirdCourse iikFirstCourse = new IIKDirectionOfGroupThirdCourse(direction);
-            return iikFirstCourse.getGroupUser();
-        } else if (course.equals("4")) {
-            IIKDirectionOfGroupFourthCourse iikFirstCourse = new IIKDirectionOfGroupFourthCourse(direction);
-            return iikFirstCourse.getGroupUser();
-        } else {
-            IIKDirectionOfGroupFifthCourse iikFirstCourse = new IIKDirectionOfGroupFifthCourse(direction);
-            return iikFirstCourse.getGroupUser();
-        }
-    }
-
-    private boolean checkAvailabilityDirection(String direction, String course) {
-        if (course.equals("1")) {
-            IIKDirectionOfGroupFirstCourse iikFirstCourse = new IIKDirectionOfGroupFirstCourse(direction);
-            return iikFirstCourse.checkAvailabilityDirection();
-        } else if (course.equals("2")) {
-            IIKDirectionOfGroupSecondCourse iikFirstCourse = new IIKDirectionOfGroupSecondCourse(direction);
-            return iikFirstCourse.checkAvailabilityDirection();
-        } else if (course.equals("3")) {
-            IIKDirectionOfGroupThirdCourse iikFirstCourse = new IIKDirectionOfGroupThirdCourse(direction);
-            return iikFirstCourse.checkAvailabilityDirection();
-        } else if (course.equals("4")) {
-            IIKDirectionOfGroupFourthCourse iikFirstCourse = new IIKDirectionOfGroupFourthCourse(direction);
-            return iikFirstCourse.checkAvailabilityDirection();
-        } else {
-            IIKDirectionOfGroupFifthCourse iikFirstCourse = new IIKDirectionOfGroupFifthCourse(direction);
-            return iikFirstCourse.checkAvailabilityDirection();
-        }
-    }
-
-    private void callParser(long chatId, boolean criterion, long messageId) {
-        Parser parser = new Parser(idDirection, numberOfWeek, criterion);
-        timeTable = parser.Print();
-        SendMessage message = new SendMessage();
-        InLineKeyboardWeekday inLineKeyboardButtonOfCourses = new InLineKeyboardWeekday();
-        message = inLineKeyboardButtonOfCourses.choiceOfWeekday(chatId, String.valueOf(timeTable.get(dayNumber)));
-        sendMessage(message);
-    }
-    private void editMessage(long chatId, long messageId){
-        if (chatId != messageId) {
-            DeleteMessage deleteMessage = new DeleteMessage();
-            deleteMessage.setChatId(chatId);
-            deleteMessage.setMessageId((int) messageId);
-            try {
-                execute(deleteMessage);
-            } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
+                EditMessageText message = new EditMessageText();
+                message.setChatId(chatId);
+                message.setMessageId((int) messageId);
+                message.setText(String.valueOf(timeTable.get(0)));
+                InLineKeyboardWeekday keyboard = new InLineKeyboardWeekday();
+                sendMessage(message, keyboard.choiceOfWeekday());
             }
         }
-        SendMessage message;
-        InLineKeyboardWeekday inLineKeyboardButtonOfCourses = new InLineKeyboardWeekday();
-        if (String.valueOf(timeTable.get(dayNumber)).trim().equals("")){
-            dayNumber=0;
-        }
-        message = inLineKeyboardButtonOfCourses.choiceOfWeekday(chatId, String.valueOf(timeTable.get(dayNumber)));
-        dayNumber=0;
-        sendMessage(message);
-    }
-
-    private void keyboardChooseWeek(long chatId) {
-        numberOfWeek = 0;
-        callParser(chatId, false, chatId);
-        SendMessage message = new SendMessage();
-    }
-
-    private void choiceOfCourse(long chatId) {
-        InLineKeyboardButtonOfCourses inLineKeyboardButtonOfCourses = new InLineKeyboardButtonOfCourses();
-        SendMessage message = inLineKeyboardButtonOfCourses.choiceOfCourse(chatId);
-        sendMessage(message);
     }
 
 
@@ -271,6 +228,30 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private void sendMessage(SendMessage message) {
         try {
+            execute(message);
+        } catch (TelegramApiException e) {
+        }
+    }
+
+    private void sendMessage(SendMessage message, InlineKeyboardMarkup keyboard) {
+        try {
+            message.setReplyMarkup(keyboard);
+            execute(message);
+        } catch (TelegramApiException e) {
+        }
+    }
+
+    private void sendMessage(SendMessage message, ReplyKeyboard keyboard) {
+        try {
+            message.setReplyMarkup(keyboard);
+            execute(message);
+        } catch (TelegramApiException e) {
+        }
+    }
+
+    private void sendMessage(EditMessageText message, InlineKeyboardMarkup keyboard) {
+        try {
+            message.setReplyMarkup(keyboard);
             execute(message);
         } catch (TelegramApiException e) {
         }

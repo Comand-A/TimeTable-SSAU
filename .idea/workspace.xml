@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a02f544-0b08-43d9-9c6c-c754134f900e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InLineKeyboardButtonOfCourses.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InLineKeyboardButtonOfCourses.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InLineKeyboardWeekday.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InLineKeyboardWeekday.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InlineKeyboardButtonUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/InlineKeyboardButtonUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/ReplyKeyboardUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/KeyBoard/ReplyKeyboardUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Service/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Telegram/Service/TelegramBot.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,27 +44,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/werog/Downloads/one-dark-theme-5.7.0.zip&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;f083559a7b02557ac952250a8f99affc&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "last_opened_file_path": "D:/GitHub/TimeTable-SSAU/src/main/java/org/example/Telegram/KeyBoard",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "f083559a7b02557ac952250a8f99affc"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\GitHub\TimeTable-SSAU\src\main\java\org\example\DirectionSSAU\IIK" />
+      <recent name="D:\GitHub\TimeTable-SSAU\src\main\java\org\example\Telegram\KeyBoard" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.example.Telegram.Service" />
+      <recent name="org.example.DirectionSSAU.IIK" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="configurationTypes">
@@ -177,6 +190,9 @@
       <workItem from="1676009787536" duration="365000" />
       <workItem from="1676013544041" duration="2961000" />
       <workItem from="1676102509713" duration="479000" />
+      <workItem from="1676226792884" duration="666000" />
+      <workItem from="1676269050636" duration="183000" />
+      <workItem from="1676533230368" duration="352000" />
     </task>
     <servers />
   </component>

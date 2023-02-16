@@ -1,7 +1,6 @@
-package org.example.DirectionSSAU.IIK.IIKDirectionOfGroups;
+package org.example.IIK.IIKDirectionOfGroups;
 
 import org.example.Telegram.Model.DirectionIIK;
-import org.example.Telegram.Model.Emoji;
 
 import java.util.*;
 
@@ -20,15 +19,8 @@ public class IIKDirectionOfGroupFirstCourse {
 
     public IIKDirectionOfGroupFirstCourse(String direction) {
         this.direction = direction;
-
     }
-
-    public boolean checkAvailabilityDirection() {
-        return directionOfGroup.containsKey(direction);
-    }
-
-    public List<String> getGroupUser() {
+    public List<String> returnList(){
         return directionOfGroup.get(direction);
     }
-
 }

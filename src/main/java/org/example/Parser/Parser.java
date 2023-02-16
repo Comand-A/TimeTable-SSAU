@@ -8,7 +8,9 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Parser {
     private Document page;
@@ -28,8 +30,8 @@ public class Parser {
         this.idDirection = idDirection;
         RealDate realDate = new RealDate();
         try {
-            if (criterion) this.numberOfWeek = String.valueOf(numberOfWeekUser);
-            else this.numberOfWeek = realDate.getNumberOfWeek(numberOfWeekUser);
+            if (criterion) this.numberOfWeek = String.valueOf(realDate.numberOfWeek);
+            else this.numberOfWeek = String.valueOf(realDate.numberOfWeek)+numberOfWeekUser;
             page = getPage();
             table = page.select("div[class=schedule__items]").first();
 

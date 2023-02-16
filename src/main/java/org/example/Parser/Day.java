@@ -1,7 +1,5 @@
 package org.example.Parser;
 
-import java.util.ArrayList;
-
 public class Day {
     public Day(String date, String paraFirst, String paraSecond, String paraThird, String paraFourth, String paraFifth, String paraSixth) {
         this.date = date;

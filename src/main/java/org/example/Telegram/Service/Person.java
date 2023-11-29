@@ -11,13 +11,16 @@ public class Person {
     public List<Day> weekMemory;
     public long numberOfWeek = 0;
     public String[] idDirection = new String[2];
+    public String[] idDirectionMemory = new String[2];
+
     public Person(){
         idDirection[0] = "";
         idDirection[1] = "";
     }
-    public Person(List<Day> week){
+    public Person(List<Day> w, String[] m){
         idDirection[0] = "";
         idDirection[1] = "";
-        weekMemory = new ArrayList<>(week);
+        weekMemory = w;
+        idDirection = m;
     }
 }

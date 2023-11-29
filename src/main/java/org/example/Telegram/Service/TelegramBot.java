@@ -91,6 +91,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 } else if (callbackData.contains("DAY") && users.get(chatId).week != null) {
                     editMessage(String.valueOf(users.get(chatId).week.get(Integer.parseInt(String.valueOf(callbackData.charAt(0))) - 1)), messageId, Keyboards.week());
                 } else if (callbackData.contains("MEMORY") && users.get(chatId).week != null) {
+                    users.get(chatId).idDirectionMemory = users.get(chatId).idDirection;
                     users.get(chatId).weekMemory = users.get(chatId).week;
                 } else if (callbackData.contains("NEXT_WEEK") && users.get(chatId).week != null) {
                     deletingMessage((int) messageId);

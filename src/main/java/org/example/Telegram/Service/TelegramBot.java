@@ -48,8 +48,6 @@ public class TelegramBot extends TelegramLongPollingBot {
                     sendMessage("Выберите ваш курс", Keyboards.numberOfCourse());
                     if (users.containsKey(chatId)) {
                         users.replace(chatId, new Person());
-                    } else if (users.containsKey(chatId) && users.get(chatId).weekMemory != null) {
-                        users.replace(chatId, new Person(users.get(chatId).weekMemory));
                     } else {
                         users.put(chatId, new Person());
                     }

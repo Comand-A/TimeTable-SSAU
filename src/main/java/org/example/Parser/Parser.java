@@ -20,26 +20,31 @@ public class Parser {
     private ArrayList<String> groups;
     private ArrayList<String> cssQueryList;
     private List<Day> timeTable;
-    private final String idDirection;
+    private Map<String, List<Day>> cash = new HashMap<>();
+    private String idDirection;
     private String numberOfWeek;
 
 
     public Parser(String idDirection, long numberOfWeekUser) {
-        this.idDirection = idDirection;
         RealDate realDate = new RealDate();
+        this.idDirection = idDirection;
         try {
             this.numberOfWeek = realDate.getNumberOfWeek(numberOfWeekUser);
-            page = getPage();
-            table = page.select("div[class=schedule__items]").first();
-
+            if (cash.containsKey(this.numberOfWeek+"."+idDirection)) {
+                timeTable = cash.get(this.numberOfWeek+"."+idDirection);
+            } else {
+                page = getPage();
+                table = page.select("div[class=schedule__items]").first();
+                getDate();
+                getFullWeekDays();
+                getSchedulePlace();
+                getTeacher();
+                getGroups();
+            }
         } catch (IOException e) {
             e.printStackTrace();
+
         }
-        getDate();
-        getFullWeekDays();
-        getSchedulePlace();
-        getTeacher();
-        getGroups();
     }
 
 
@@ -155,7 +160,7 @@ public class Parser {
                             pairs.set(3, "");
                             if (fullWeekDays.get(i + 24).equals(Emoji.CROSS.get())) {
                                 pairs.set(4, "");
-                                if (fullWeekDays.get(i+30).equals(Emoji.CROSS.get())) {
+                                if (fullWeekDays.get(i + 30).equals(Emoji.CROSS.get())) {
                                     pairs.set(5, "");
                                 }
                             }
@@ -170,6 +175,8 @@ public class Parser {
 
     public List<Day> Print() {
         timeTable = getTimeTable();
+        if (!cash.containsKey(numberOfWeek+"."+idDirection))
+            cash.put(numberOfWeek+"."+idDirection,timeTable);
         return timeTable;
     }
 }

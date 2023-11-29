@@ -16,10 +16,14 @@ public class Person {
     public Person(){
         idDirection[0] = "";
         idDirection[1] = "";
+        idDirectionMemory[0] = "";
+        idDirectionMemory[1] = "";
     }
     public Person(List<Day> w, String[] m){
         idDirection[0] = "";
         idDirection[1] = "";
+        idDirectionMemory[0] = "";
+        idDirectionMemory[1] = "";
         weekMemory = w;
         idDirection = m;
     }

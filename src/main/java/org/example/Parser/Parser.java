@@ -8,9 +8,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Parser {
     private Document page;
@@ -26,12 +24,11 @@ public class Parser {
     private String numberOfWeek;
 
 
-    public Parser(String idDirection, long numberOfWeekUser, boolean criterion) {
+    public Parser(String idDirection, long numberOfWeekUser) {
         this.idDirection = idDirection;
         RealDate realDate = new RealDate();
         try {
-            if (criterion) this.numberOfWeek = String.valueOf(realDate.numberOfWeek);
-            else this.numberOfWeek = String.valueOf(realDate.numberOfWeek)+numberOfWeekUser;
+            this.numberOfWeek = realDate.getNumberOfWeek(numberOfWeekUser);
             page = getPage();
             table = page.select("div[class=schedule__items]").first();
 
@@ -130,13 +127,41 @@ public class Parser {
             pairs.add(String.valueOf(new Para(fullWeekDays.get(i + 18), schedulePlace.get(i + 18), teachers.get(i + 18), groups.get(i + 18), 3)));
             pairs.add(String.valueOf(new Para(fullWeekDays.get(i + 24), schedulePlace.get(i + 24), teachers.get(i + 24), groups.get(i + 24), 4)));
             pairs.add(String.valueOf(new Para(fullWeekDays.get(i + 30), schedulePlace.get(i + 30), teachers.get(i + 30), groups.get(i + 30), 5)));
-            int j=5;
-            while ((fullWeekDays.get(i + j*6).equals(Emoji.CROSS.get()) || fullWeekDays.get(i + (5-j)*6).equals(Emoji.CROSS.get())) && (j>0)){
-                if (fullWeekDays.get(i + j*6).equals(Emoji.CROSS.get()))
-                    pairs.set(j, "");
-                if(fullWeekDays.get(i + (5-j)*6).equals(Emoji.CROSS.get()))
-                    pairs.set((5-j), "");
-                --j;
+            if (fullWeekDays.get(i + 30).equals(Emoji.CROSS.get())) {
+                pairs.set(5, "");
+                if (fullWeekDays.get(i + 24).equals(Emoji.CROSS.get())) {
+                    pairs.set(4, "");
+                    if (fullWeekDays.get(i + 18).equals(Emoji.CROSS.get())) {
+                        pairs.set(3, "");
+                        if (fullWeekDays.get(i + 12).equals(Emoji.CROSS.get())) {
+                            pairs.set(2, "");
+                            if (fullWeekDays.get(i + 6).equals(Emoji.CROSS.get())) {
+                                pairs.set(1, "");
+                                if (fullWeekDays.get(i).equals(Emoji.CROSS.get())) {
+                                    pairs.set(0, "");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (fullWeekDays.get(i).equals(Emoji.CROSS.get())) {
+                pairs.set(0, "");
+                if (fullWeekDays.get(i + 6).equals(Emoji.CROSS.get())) {
+                    pairs.set(1, "");
+                    if (fullWeekDays.get(i + 12).equals(Emoji.CROSS.get())) {
+                        pairs.set(2, "");
+                        if (fullWeekDays.get(i + 18).equals(Emoji.CROSS.get())) {
+                            pairs.set(3, "");
+                            if (fullWeekDays.get(i + 24).equals(Emoji.CROSS.get())) {
+                                pairs.set(4, "");
+                                if (fullWeekDays.get(i+30).equals(Emoji.CROSS.get())) {
+                                    pairs.set(5, "");
+                                }
+                            }
+                        }
+                    }
+                }
             }
             timeTable.add(new Day(dates.get(i), pairs.get(0), pairs.get(1), pairs.get(2), pairs.get(3), pairs.get(4), pairs.get(5)));
         }

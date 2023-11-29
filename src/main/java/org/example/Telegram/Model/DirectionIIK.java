@@ -3,7 +3,7 @@ package org.example.Telegram.Model;
 import com.vdurmont.emoji.EmojiParser;
 
 public enum DirectionIIK {
-    FIIT(Emoji.CROWN.get() + "ФИИТ" + Emoji.CROWN.get()),
+    FIIT("ФИИТ"),
     PMF("ПМФ"),
     PMI("ПМИ"),
     IVT("ИВТ"),

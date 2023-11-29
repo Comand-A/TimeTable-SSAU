@@ -1,17 +1,40 @@
 package org.example.Parser;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import java.io.IOException;
+import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RealDate {
-    public long numberOfWeek;
+    private Document page;
+    private Element table;
+    private String realDate;
 
-    public void getNumberOfWeek(int realDate) throws IOException {
-        long time = realDate;
-        Date date = new Date(time*1000);
-        if (date.getDay()==0)
-            numberOfWeek = ((realDate - 1661630400 / 604800) + 1)-21;
-        else
-            numberOfWeek = ((realDate - 1661630400 / 604800) + 1)-22;
+    private void getPage() throws IOException {
+
+        String url = "https://www.xn----7sbanbef0eh1ai8n.xn--p1ai/";
+        page = Jsoup.parse(new URL(url), 5000);
+        table = page.select("ul[class=text-center]").first();
+        realDate = table.select("span").first().text();
+    }
+
+    public String getNumberOfWeek(long number) throws IOException {
+        getPage();
+        long millisecondsInOneWeek = 604800000;
+        Date begin = new Date(1661630400001L);
+        Date realDateInDate;
+        try {
+            realDateInDate = new SimpleDateFormat("dd.MM.yyyy").parse(realDate);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        long numberOfWeek = (((realDateInDate.getTime() - begin.getTime()) / millisecondsInOneWeek) +1)+number;
+
+        return String.valueOf(numberOfWeek-52);
     }
 }

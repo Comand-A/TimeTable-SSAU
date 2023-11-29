@@ -1,12 +1,13 @@
-package org.example.IIK.IIKCorseID;
+package org.example.DirectionSSAU.IIK.IIKCorseID;
 
 import org.example.Telegram.Model.DirectionIIK;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class IIKCoursesID {
-    public Map<String, String> map = new HashMap<String, String>() {{
+    public static Map<String, String> map = new HashMap<String, String>() {{
         put(DirectionIIK.PMI.get() + "6101", "755921059");
         put(DirectionIIK.PMI.get() + "6102", "755921402");
         put(DirectionIIK.PMI.get() + "6103", "755921408");
@@ -99,8 +100,16 @@ public class IIKCoursesID {
         put(DirectionIIK.IBAS.get() + "6512", "531874011");
         put(DirectionIIK.RADIO_ELECTRONICS_AND_COMPLEXES.get() + "6561", "531046380");
     }};
+    private String directionOfGroup;
 
-    public IIKCoursesID() {
+    public IIKCoursesID(ArrayList<String> directionOfGroup) {
+        this.directionOfGroup = directionOfGroup.get(1) + directionOfGroup.get(2);
 
     }
+
+    public String getIdDirectionUser() {
+        return map.get(directionOfGroup);
+    }
+
+
 }

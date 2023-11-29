@@ -24,11 +24,11 @@ public class TelegramBot extends TelegramLongPollingBot {
     private String chatId;
 
     public String getBotUsername() {
-        return "@TimeTableSSAUBot";
+        return "@TimeTableSSAUtestbot";
     }
 
     public String getBotToken() {
-        return "5600469375:AAGiD2pqJ78SYQ2NvuyGPg8CBQ3dkEst2js";
+        return "6725846809:AAHOjg27eHjhrU9ijWoi4sJpnlKhQI1tgSQ";
     }
 
 
@@ -47,7 +47,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 case "\uD83D\uDE80К расписанию\uD83D\uDE80":
                     sendMessage("Выберите ваш курс", Keyboards.numberOfCourse());
                     if (users.containsKey(chatId)) {
-                        users.replace(chatId, new Person());
+                        users.replace(chatId, new Person(users.get(chatId).weekMemory,users.get(chatId).idDirectionMemory));
                     } else {
                         users.put(chatId, new Person());
                     }
@@ -91,6 +91,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 } else if (callbackData.contains("DAY") && users.get(chatId).week != null) {
                     editMessage(String.valueOf(users.get(chatId).week.get(Integer.parseInt(String.valueOf(callbackData.charAt(0))) - 1)), messageId, Keyboards.week());
                 } else if (callbackData.contains("MEMORY") && users.get(chatId).week != null) {
+                    users.get(chatId).idDirectionMemory = users.get(chatId).idDirection;
                     users.get(chatId).weekMemory = users.get(chatId).week;
                 } else if (callbackData.contains("NEXT_WEEK") && users.get(chatId).week != null) {
                     deletingMessage((int) messageId);

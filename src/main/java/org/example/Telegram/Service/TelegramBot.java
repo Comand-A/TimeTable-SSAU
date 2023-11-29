@@ -47,7 +47,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 case "\uD83D\uDE80К расписанию\uD83D\uDE80":
                     sendMessage("Выберите ваш курс", Keyboards.numberOfCourse());
                     if (users.containsKey(chatId)) {
-                        users.replace(chatId, new Person());
+                        users.replace(chatId, new Person(users.get(chatId).weekMemory,users.get(chatId).idDirectionMemory));
                     } else {
                         users.put(chatId, new Person());
                     }

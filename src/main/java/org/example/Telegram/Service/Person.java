@@ -2,6 +2,7 @@ package org.example.Telegram.Service;
 
 import org.example.Parser.Day;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
@@ -13,5 +14,10 @@ public class Person {
     public Person(){
         idDirection[0] = "";
         idDirection[1] = "";
+    }
+    public Person(List<Day> week){
+        idDirection[0] = "";
+        idDirection[1] = "";
+        weekMemory = new ArrayList<>(week);
     }
 }
